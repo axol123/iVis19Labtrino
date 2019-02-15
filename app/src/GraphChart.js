@@ -33,8 +33,6 @@ export default class GraphChart extends Component {
     width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-    console.log(data)
-
     //const data = this.props.data;
     const svg = d3.select("#graph-chart")
         .append("svg")
@@ -44,26 +42,14 @@ export default class GraphChart extends Component {
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-        d3.csv(data,
-        // When reading the csv, I must format variables:
-        
-        function(d){
-        var newTimestamp = d3.timeParse("%Y-%m-%d %H:%M:%S")(d.timestamp_hour);
-           return { timestamp_hour : newTimestamp, volume : d.volume, hot : d.hot, cold : d.cold}
-        },
-    
-        
-        // Now I can use this dataset:
-  function(data) {
+        d3.csv(data).then(function(data) {
    
-    data.timestamp_hour = new Date(data.timestamp_hour);
     console.log(data)
-    console.log(data.timestamp_hour)
-    console.log(d3.extent(data, function(d){ return d.timestamp_hour;} ))
+    console.log(d3.extent(data, function(d){ return new Date(d.timestamp_hour);} ))
 
     // Add X axis --> it is a date format
     var x = d3.scaleTime()
-      .domain(d3.extent(data, function(d){return d.timestamp_hour}))
+      .domain(d3.extent(data, function(d){return new Date(d.timestamp_hour)}))
       .range([ 0, width ]);
 
 
@@ -108,7 +94,7 @@ export default class GraphChart extends Component {
     .attr("stroke", "limegreen")
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
-      .x(function(d) { return x(d.timestamp_hour) })
+      .x(function(d) { return x(new Date(d.timestamp_hour)) })
       .y(function(d) { return y(d.volume) })
       )
     // console.log(d.date); console.log(d.volume); 
@@ -122,7 +108,7 @@ export default class GraphChart extends Component {
     .attr("stroke", "crimson")
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
-      .x(function(d) { return x(d.timestamp_hour) })
+      .x(function(d) { return x(new Date(d.timestamp_hour)) })
       .y(function(d) { return y(d.hot) })
       )
 
@@ -134,7 +120,7 @@ export default class GraphChart extends Component {
     .attr("stroke", "steelblue")
     .attr("stroke-width", 1.5)
     .attr("d", d3.line()
-      .x(function(d) { return x(d.timestamp_hour) })
+      .x(function(d) { return x(new Date(d.timestamp_hour)) })
       .y(function(d) { return y(d.cold) })
       )
 
@@ -168,7 +154,7 @@ export default class GraphChart extends Component {
         .transition()
         .duration(1000)
         .attr("d", d3.line()
-          .x(function(d) { return x(d.timestamp_hour) })
+          .x(function(d) { return x(new Date(d.timestamp_hour)) })
           .y(function(d) { return y(d.volume) })
         )
     // Update axis and line position
@@ -178,7 +164,7 @@ export default class GraphChart extends Component {
         .transition()
         .duration(1000)
         .attr("d", d3.line()
-          .x(function(d) { return x(d.timestamp_hour) })
+          .x(function(d) { return x(new Date(d.timestamp_hour)) })
           .y(function(d) { return y(d.hot) })
         )
     // Update axis and line position
@@ -188,19 +174,19 @@ export default class GraphChart extends Component {
         .transition()
         .duration(1000)
         .attr("d", d3.line()
-          .x(function(d) { return x(d.timestamp_hour) })
+          .x(function(d) { return x(new Date(d.timestamp_hour)) })
           .y(function(d) { return y(d.cold) })
         )
   }
   // If user double click, reinitialize the chart
   svg.on("dblclick",function(){
-    x.domain(d3.extent(data, function(d) { return d.timestamp_hour; }))
+    x.domain(d3.extent(data, function(d) { return new Date(d.timestamp_hour); }))
     xAxis.transition().call(d3.axisBottom(x))
     line
       .select('.line_vol')
       .transition()
       .attr("d", d3.line()
-        .x(function(d) { return x(d.timestamp_hour) })
+        .x(function(d) { return x(new Date(d.timestamp_hour)) })
         .y(function(d) { return y(d.volume) })
     )
     xAxis.transition().call(d3.axisBottom(x))
@@ -208,7 +194,7 @@ export default class GraphChart extends Component {
       .select('.line_hot')
       .transition()
       .attr("d", d3.line()
-        .x(function(d) { return x(d.timestamp_hour) })
+        .x(function(d) { return x(new Date(d.timestamp_hour)) })
         .y(function(d) { return y(d.hot) })
     )
     xAxis.transition().call(d3.axisBottom(x))
@@ -216,7 +202,7 @@ export default class GraphChart extends Component {
       .select('.line_cold')
       .transition()
       .attr("d", d3.line()
-        .x(function(d) { return x(d.timestamp_hour) })
+        .x(function(d) { return x(new Date(d.timestamp_hour)) })
         .y(function(d) { return y(d.cold) })
     )
   });
