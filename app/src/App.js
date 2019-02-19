@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import LineChart from "./LineChart";
-import BubbleChart from "./BubbleChart";
-import GraphChart from "./GraphChart/GraphChart";
-import SelectApartment from "./SelectApartment/SelectApartment";
+import DetailView from './DetailView';
+import GraphChart from './GraphChart/GraphChart';
+import SelectApartment from './SelectApartment/SelectApartment';
 
 import * as firebase from "firebase";
 
@@ -49,31 +48,17 @@ class App extends Component {
 
 	readData = obj => {
 		var array = [];
-
-		//Logs all of the trees arrays fetched from firebase
-		console.log(obj.val());
-
+		console.log(obj.val())
 		array.push(obj.val());
-		console.log("array" + array);
-		this.setState({ data: array });
+		this.setState({ data: obj.val() });
 
-		//Logs everything inside of the fetched value at the dictionary key "10"
-		console.log("dataaa: " + this.state.data[0]["10"]);
 	};
 
 	render() {
-		console.log("dataaa" + this.state.data);
-
-		// <img src={logo} className="App-logo" alt="logo" />
-		// <p>	Edit <code>src/App.js</code> and save to reload.</p>
-		// <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-		// 	Learn React
-		// </a>
-
 		return (
 			<div className="App">
 				<header className="App-header">
-					<h2>Labtrino</h2>
+				<DetailView data={this.state.data}/>
 				</header>
 				<div className="charts">
 					{/*<p>LineChart</p>
