@@ -3,7 +3,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import LineChart from "./LineChart";
 import BubbleChart from "./BubbleChart";
-import GraphChart from "./GraphChart";
+import GraphChart from "./GraphChart/GraphChart";
+import SelectApartment from "./SelectApartment/SelectApartment";
 
 import * as firebase from "firebase";
 
@@ -29,10 +30,11 @@ class App extends Component {
 		//Examples of accessing all data from a specific apartment
 
 		//Get value from Building1 where apartmentid = f58b8069-a2f5-4e2e-b8c2-a2bfb7fd642b
-		/*building1
+		
+		building1
 			.orderByChild("5")
 			.equalTo("f58b8069-a2f5-4e2e-b8c2-a2bfb7fd642b")
-			.on("value", this.readData);*/
+			.on("value", this.readData);
 
 		// //Get value from Building2 where apartmentid = 5585bb8d-6e5d-4f01-91c0-b73632b6e2b0
 		// building2.orderByChild("5")
@@ -78,7 +80,8 @@ class App extends Component {
 						<LineChart data={this.state.data}/>
 					<p>BubbleChart</p>
 					<BubbleChart/> */}
-					<GraphChart data={this.state.data} />
+					<GraphChart />
+					<SelectApartment data={this.state.data} />
 				</div>
 			</div>
 		);

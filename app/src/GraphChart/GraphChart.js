@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import data from './one_building_hour.csv';
+import data from '../one_building_hour.csv';
 
 //D3 v5
 import * as d3 from "d3";
@@ -215,14 +215,9 @@ export default class GraphChart extends Component {
 */
 })
 
-
-
   }
   render(){
- 
-
-    return <div id="graph-chart">
-    </div>
+    return <div id="graph-chart"></div>
   }
 
 }
