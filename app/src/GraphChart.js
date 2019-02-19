@@ -8,7 +8,7 @@ export default class GraphChart extends Component {
     
 
   componentDidMount() {
-     
+    this.drawChart();
 
   }
 
@@ -16,7 +16,7 @@ export default class GraphChart extends Component {
   componentDidUpdate(prevProps){
     if (this.props.data !== prevProps.data) {
    
-      this.drawChart();
+
       //console.log(this.props.data);
     }
 
@@ -25,7 +25,7 @@ export default class GraphChart extends Component {
 
   drawChart() {
 
-    console.log(this.props.data[0]["10"]);
+   // console.log(this.props.data[0]["10"]);
     // const hello = this.props.data;
     // console.log(hello)
 
