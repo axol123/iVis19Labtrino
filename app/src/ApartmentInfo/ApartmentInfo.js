@@ -46,7 +46,7 @@ class ApartmentInfo extends Component {
   }
   render(){
     return(
-    <div className="apartmentInfo">
+    <div className="apartmentInfo header">
     <p> ApartmentInfo </p>
     </div>
   )}

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import DetailView from './DetailView';
-import GraphChart from './GraphChart/GraphChart';
-import SelectApartment from './SelectApartment/SelectApartment';
+import DetailView from "./DetailView/DetailView";
+import GraphChart from "./Charts/GraphChart";
+import SelectApartment from "./SelectApartment/SelectApartment";
 
 import * as firebase from "firebase";
 
@@ -29,7 +29,7 @@ class App extends Component {
 		//Examples of accessing all data from a specific apartment
 
 		//Get value from Building1 where apartmentid = f58b8069-a2f5-4e2e-b8c2-a2bfb7fd642b
-		
+
 		building1
 			.orderByChild("5")
 			.equalTo("f58b8069-a2f5-4e2e-b8c2-a2bfb7fd642b")
@@ -48,25 +48,19 @@ class App extends Component {
 
 	readData = obj => {
 		var array = [];
-		console.log(obj.val())
+		console.log(obj.val());
 		array.push(obj.val());
 		this.setState({ data: obj.val() });
-
 	};
 
 	render() {
 		return (
 			<div className="App">
-				<header className="App-header">
-				<DetailView data={this.state.data}/>
-				</header>
-				<div className="charts">
-					{/*<p>LineChart</p>
-						<LineChart data={this.state.data}/>
-					<p>BubbleChart</p>
-					<BubbleChart/> */}
-					<GraphChart />
-					<SelectApartment data={this.state.data} />
+				<div className="container-fluid full-height">
+					<div className="row full-height">
+						<SelectApartment />
+						<DetailView data={this.state.data} />
+					</div>
 				</div>
 			</div>
 		);

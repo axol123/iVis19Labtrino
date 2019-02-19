@@ -54,13 +54,11 @@ export default class SelectApartment extends Component {
 			</li>
 		));
 		return (
-			<div className="container-fluid full-height">
-				<div className="row full-height">
-					<div className="apartment-list col-2 p-0">
-                    <h2 className="apartments-title">Apartments</h2>
-                    <br />
-						<ul className="p-0 m-0">{apartments}</ul>
-					</div>
+			<div className="col-2 p-0">
+				<div className="apartment-list p-0">
+					<h3 className="apartments-title">Apartments</h3>
+					<br />
+					<ul className="p-0 m-0">{apartments}</ul>
 				</div>
 			</div>
 		);

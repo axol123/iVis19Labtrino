@@ -30,8 +30,8 @@ export default class GraphChart extends Component {
     // console.log(hello)
 
     var margin = {top: 10, right: 30, bottom: 100, left: 60},
-    width = 1000 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
     //const data = this.props.data;
     const svg = d3.select("#graph-chart")
@@ -217,7 +217,7 @@ export default class GraphChart extends Component {
 
   }
   render(){
-    return <div id="graph-chart"></div>
+    return <div id="graph-chart" className="header"></div>
   }
 
 }
