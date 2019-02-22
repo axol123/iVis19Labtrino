@@ -20,9 +20,9 @@ class App extends Component {
 		// Ref to database trees
 		var buildingMaster = this.database.ref("BuildingMasterSheet");
 		var master = this.database.ref("masterSheet");
-		var building1 = this.database.ref("building_1")
-		var building2 = this.database.ref("building_2")
-		var building3 = this.database.ref("building_3")
+		// var building1 = this.database.ref("building_1")
+		// var building2 = this.database.ref("building_2")
+		// var building3 = this.database.ref("building_3")
 
 		//Examples of accessing all data from a specific apartment
 

@@ -27,7 +27,6 @@ class DetailView extends Component {
   render(){
     return(
     <div className="detailView">
-      <p> Details</p>
       <ApartmentInfo data={this.props.data}/>
       <LineChart data={this.props.data}/>
       <BubbleChart data={this.props.data}/>
