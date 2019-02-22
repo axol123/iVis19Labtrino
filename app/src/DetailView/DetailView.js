@@ -21,20 +21,22 @@ class DetailView extends Component {
     }
   }
 
+
   readData = obj => {
+    console.log(this.props.data)
     this.setState({data: this.props.data})
   }
 
   render(){
+          //<LineChart data={this.props.data}/>
     return(
-      <div className="col-10 p-0">
-    <div className="detailView header">
-      <p> Details</p>
-      <ApartmentInfo data={this.props.data}/>
-      <LineChart data={this.props.data}/>
-      <BubbleChart data={this.props.data}/>
-      <GraphChart />
-    </div>
+    <div className="col-10 p-0">
+      <div className="detailView header">
+        <ApartmentInfo data={this.props.data}/>
+
+        <BubbleChart />
+        <GraphChart />
+      </div>
     </div>
 
   );

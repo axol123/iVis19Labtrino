@@ -5,7 +5,7 @@ import data from '../one_building_hour.csv';
 import * as d3 from "d3";
 
 export default class GraphChart extends Component {
-    
+
 
   componentDidMount() {
     this.drawChart();
@@ -15,7 +15,7 @@ export default class GraphChart extends Component {
 //Waiting for new props from parent component
   componentDidUpdate(prevProps){
     if (this.props.data !== prevProps.data) {
-   
+
 
       //console.log(this.props.data);
     }
@@ -43,7 +43,7 @@ export default class GraphChart extends Component {
               "translate(" + margin.left + "," + margin.top + ")");
 
         d3.csv(data).then(function(data) {
-   
+
     console.log(data)
     console.log(d3.extent(data, function(d){ return new Date(d.timestamp_hour);} ))
 
@@ -56,7 +56,7 @@ export default class GraphChart extends Component {
     var xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
-     
+
       // Add Y axis
 
     var y = d3.scaleLinear()
@@ -66,7 +66,7 @@ export default class GraphChart extends Component {
   var yAxis = svg.append("g")
     .call(d3.axisLeft(y));
   // Add a clipPath: everything out of this area won't be drawn.
-  
+
   var clip = svg.append("defs").append("svg:clipPath")
       .attr("id", "clip")
       .append("svg:rect")
@@ -74,14 +74,14 @@ export default class GraphChart extends Component {
       .attr("height", height )
       .attr("x", 0)
       .attr("y", 0);
- 
-  
+
+
       // Add brushing
   var brush = d3.brushX()                   // Add the brush feature using the d3.brush function
       .extent( [ [0,0], [width,height] ] )  // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
       .on("end", updateChart)               // Each time the brush selection changes, trigger the 'updateChart' function
-  
-  
+
+
       // Create the line variable: where both the line and the brush take place
   var line = svg.append('g')
     .attr("clip-path", "url(#clip)")
@@ -97,7 +97,7 @@ export default class GraphChart extends Component {
       .x(function(d) { return x(new Date(d.timestamp_hour)) })
       .y(function(d) { return y(d.volume) })
       )
-    // console.log(d.date); console.log(d.volume); 
+    // console.log(d.date); console.log(d.volume);
 
 
   // Add the line - hot water
@@ -210,14 +210,14 @@ export default class GraphChart extends Component {
   // If user double click, reinitialize the chart
   svg.on("dblclick",function(){
     x.domain(d3.extent(data, function(d) { return d.date; }))
-    
+
   });
 */
 })
 
   }
   render(){
-    return <div id="graph-chart" className="header"></div>
+    return <div id="graph-chart" className="header col-5 p-0"></div>
   }
 
 }
