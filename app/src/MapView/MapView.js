@@ -41,7 +41,7 @@ class MapView extends Component {
 
   }
   render(){
-    return <div className="map">Map</div>
+    return <div className="linechart header">Map</div>
   }
 
 }

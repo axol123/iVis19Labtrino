@@ -1,0 +1,15 @@
+.apartmentInfo{
+  width: 350pt;
+  height: 400pt;
+  background-color: #8cc5e7;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  box-shadow: 1px 1px 20px #8cc5e7;
+  margin-left: 30pt;
+  margin-top: -20pt;
+}
+
+.infoLable{
+  padding-top: 20pt;
+  color: #fff;
+}

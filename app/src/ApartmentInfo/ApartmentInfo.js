@@ -56,9 +56,8 @@ class ApartmentInfo extends Component {
 
   render(){
     return(
-    <div className="apartmentInfo">
-    <p className="infoLable"> ApartmentInfo: </p>
-
+    <div className="apartmentInfo header">
+    <p> ApartmentInfo </p>
     </div>
   )}
 

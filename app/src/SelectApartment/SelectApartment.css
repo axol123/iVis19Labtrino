@@ -1,0 +1,23 @@
+.apartment-list{
+    background-color: white;
+    height:100%;
+}
+.apartment-item{
+    color: black;
+    background-color: lightgrey;
+    padding: 10px;
+    margin: 0px;
+}
+
+.apartment-item:hover{
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.apartments-title{
+    color: black;
+}
+
+.full-height{
+    min-height: 100vh;
+}

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import ApartmentInfo from './ApartmentInfo';
-import LineChart from './LineChart';
-import BubbleChart from './BubbleChart';
+import ApartmentInfo from '../ApartmentInfo/ApartmentInfo';
+import LineChart from '../Charts/LineChart';
+import BubbleChart from '../Charts/BubbleChart';
+import GraphChart from '../Charts/GraphChart';
 
 //D3 v5
 import * as d3 from "d3";
@@ -26,10 +27,14 @@ class DetailView extends Component {
 
   render(){
     return(
-    <div className="detailView">
+      <div className="col-10 p-0">
+    <div className="detailView header">
+      <p> Details</p>
       <ApartmentInfo data={this.props.data}/>
       <LineChart data={this.props.data}/>
       <BubbleChart data={this.props.data}/>
+      <GraphChart />
+    </div>
     </div>
 
   );
