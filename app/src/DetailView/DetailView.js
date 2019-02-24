@@ -3,6 +3,7 @@ import ApartmentInfo from '../ApartmentInfo/ApartmentInfo';
 import LineChart from '../Charts/LineChart';
 import BubbleChart from '../Charts/BubbleChart';
 import GraphChart from '../Charts/GraphChart';
+import LineChartWarmColdWater from '../Charts/LineChartWarmColdWater';
 
 //D3 v5
 import * as d3 from "d3";
@@ -15,14 +16,14 @@ class DetailView extends Component {
   }
 
 //Waiting for new props from parent component
-  componentDidUpdate(prevProps){
+  /*componentDidUpdate(prevProps){
     if (this.props.data !== prevProps.data) {
       this.readData(this.props.data);
     }
-  }
+  }*/
 
   readData = obj => {
-    this.setState({data: this.props.data})
+    this.setState({data: obj})
   }
 
   render(){
@@ -32,6 +33,7 @@ class DetailView extends Component {
       <p> Details</p>
       <ApartmentInfo data={this.props.data}/>
       <LineChart data={this.props.data}/>
+      <LineChartWarmColdWater />
       <BubbleChart data={this.props.data}/>
       <GraphChart />
     </div>
