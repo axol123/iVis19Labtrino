@@ -35,7 +35,7 @@ export default class SelectApartment extends Component {
 					if (filteredItem.length == 0) {
 						uniqueApartmentIds.push(id);
 					}
-					console.log(uniqueApartmentIds);
+				//	console.log(uniqueApartmentIds);
 				}
 		);
 	};

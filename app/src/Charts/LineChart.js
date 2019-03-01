@@ -29,7 +29,10 @@ class LineChart extends Component {
       });
 
       //const data = this.props.data;
-      const svg = d3.select(".linechart").append("svg").attr("width", 700).attr("height", 200);
+      const svg = d3.select(".linechart")
+      .append("svg")
+      .attr("width", 700)
+      .attr("height", 200);
 
       svg.selectAll("rect")
       .data(data)

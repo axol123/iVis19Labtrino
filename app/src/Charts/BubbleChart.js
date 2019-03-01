@@ -44,18 +44,18 @@ class BubbleChart extends Component {
   // Forces on the bubbles
   var sim = d3.forceSimulation();
 
-  var forceX_separate = d3.forceX(function(d) {
-      if(d.value.building_id==0){
-        return (width/2)-(width/3);
-      }
-      if(d.value.building_id==1){
-        return width/2;
-      }
-      if(d.value.building_id==2){
-        console.log(d);
-        return (width/2)+(width/3);
-      }
-    }).strength(0.05)
+  // var forceX_separate = d3.forceX(function(d) {
+  //     if(d.value.building_id==0){
+  //       return (width/2)-(width/3);
+  //     }
+  //     if(d.value.building_id==1){
+  //       return width/2;
+  //     }
+  //     if(d.value.building_id==2){
+  //       console.log(d);
+  //       return (width/2)+(width/3);
+  //     }
+  //   }).strength(0.05)
 
   var forceX_combine = d3.forceX(function(d) {
       return width/2;
@@ -112,11 +112,12 @@ class BubbleChart extends Component {
   //d3.csv("infoviz.csv", function(datapoints){
 
     var get_building_id = function(d) {
-      var id_list = ["1bbf041c-f23c-437e-9c9b-2bd43d310a7c", "52b41c98-ab21-4ad5-828b-74069bcd55e7", "c8f283c8-4e1f-4e59-8364-6e8bd70a2c24"];
+      var id_list = ["1bbf041c-f23c-437e-9c9b-2bd43d310a7c"]//, "52b41c98-ab21-4ad5-828b-74069bcd55e7", "c8f283c8-4e1f-4e59-8364-6e8bd70a2c24"];
       if(id_list.indexOf(d)==-1){
-        console.log(d);
+      //  console.log(d);
       }
       return id_list.indexOf(d);
+      //console.log(id_list.indexOf(d));
     }
 
     var apartments = d3.nest()

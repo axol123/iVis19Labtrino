@@ -1,0 +1,45 @@
+/* Style the lines by removing the fill and applying a stroke */
+.line-hot {
+    fill: none;
+    stroke: #ff0000;
+    stroke-width: 3;
+}
+
+.axisLabel{
+  fill: white !important;
+}
+
+
+div.tooltip {
+  color: rgb(5, 5, 5);
+  background: #fff;
+  padding: 0.5em;
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px 0px #a6a6a6;
+  opacity: 0.9;
+  position: absolute;
+}
+
+
+.line-cold {
+  fill: none;
+  stroke: #008cff;
+  stroke-width: 3;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+/* Style the dots by assigning a fill and stroke */
+.dot {
+    fill: #ffab00;
+    stroke: #fff;
+}
+
+  .focus circle {
+  fill: none;
+  stroke: steelblue;
+}
