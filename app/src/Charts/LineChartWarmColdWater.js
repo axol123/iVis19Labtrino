@@ -6,17 +6,7 @@ import data from "../master.json";
 import * as d3 from "d3";
 
 export default class LineChartWarmColdWater extends Component {
-	constructor() {
-		super();
-		this.state = {
-			date: null
-		};
-	}
-
-	componentDidMount() {
-		this.drawChart();
-	}
-
+	
 	//Waiting for new props from parent component
 	/*componentDidUpdate(prevProps){
     if (this.props.data !== prevProps.data) {
@@ -24,21 +14,30 @@ export default class LineChartWarmColdWater extends Component {
     }
   }*/
 
-	drawChart() {
+	drawChart(props) {
 		// Console log data
+		//var option = this.state.timeOption;
+		var startDate = new Date(props.startDate);
+		var stopDate = new Date(props.stopDate);
+		console.log(stopDate);
+		stopDate = stopDate.setDate(stopDate.getDate());
+		stopDate = new Date(stopDate);
+		console.log(startDate);
+		console.log(stopDate);
+		//console.log(option);
 		console.log(data);
 
-		var startDate = new Date("2019-01-21 00:00:00+00");
-		var stopDate = new Date("2019-01-22 00:00:00+00");
 		var apartmentId = "00179bc1-d0f5-4e73-9967-74fd48bcc974";
 
-		d3.select("#linechartDate").html(startDate);
+		d3.select("#linechartDate").html(startDate + "\n" + stopDate);
+
+		console.log(new Date(data[0].timestamp_hour))
 
 		var filteredDate = data.filter(
 			record =>
 				new Date(record.timestamp_hour) >= startDate &&
-				new Date(record.timestamp_hour) < stopDate &&
-				record.apartment_id == apartmentId
+				new Date(record.timestamp_hour) < stopDate && 
+				record.apartment_id === apartmentId
 		);
 		console.log(filteredDate);
 
@@ -52,8 +51,8 @@ export default class LineChartWarmColdWater extends Component {
 
 		// X scale will use the index of our data
 		var xScale = d3
-			.scaleLinear()
-			.domain([0, 23])
+			.scaleTime()
+			.domain(d3.extent(filteredDate, function(d){return new Date(d.timestamp_hour);}))
 			.range([0, width]); // output
 
 		// Y scale will use the randomly generate number
@@ -74,14 +73,12 @@ export default class LineChartWarmColdWater extends Component {
 		// D3's line generator
 		var lineHot = d3
 			.line()
-			.x(function(d, i) {
-				console.log(i);
-				return xScale(i);
+			.x(function(d){return xScale(new Date(d.timestamp_hour))
 			})
 
 			// set the x values for the line generator
 			.y(function(d) {
-				console.log("hot:" + d.hot);
+				//console.log("hot:" + d.hot);
 				return yScale(parseFloat(d.hot));
 			}) // set the y values for the line generator
 			.curve(d3.curveMonotoneX); // apply smoothing to the line
@@ -89,12 +86,10 @@ export default class LineChartWarmColdWater extends Component {
 		// D3's line generator
 		var lineCold = d3
 			.line()
-			.x(function(d, i) {
-				console.log(i);
-				return xScale(i);
+			.x(function(d){return xScale(new Date(d.timestamp_hour))
 			}) // set the x values for the line generator
 			.y(function(d) {
-				console.log("cold:" + d.cold);
+				//console.log("cold:" + d.cold);
 				return yScale(parseFloat(d.cold));
 			}) // set the y values for the line generator
 			.curve(d3.curveMonotoneX); // apply smoothing to the line
@@ -170,12 +165,16 @@ export default class LineChartWarmColdWater extends Component {
 			.append("circle")
 			.attr("class", "dot") // Assign a class for styling
 			.attr("cx", function(d, i) {
-				return xScale(i);
+				return xScale(new Date(d.timestamp_hour))
 			})
 			.attr("cy", function(d) {
 				return yScale(parseFloat(d.hot));
 			})
-			.attr("r", 5);
+			.attr("r", 5)
+		  .on("mouseover", function(d){tooltip.text(d.hot + '\n' + 'liters'); return tooltip.style("visibility", "visible");})
+      		.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-220)+"px");})
+      		.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+      		.style("fill", "#ff0000");
 
 		// Appends a circle for each datapoint with
 		svg
@@ -185,33 +184,53 @@ export default class LineChartWarmColdWater extends Component {
 			.append("circle")
 			.attr("class", "dot") // Assign a class for styling
 			.attr("cx", function(d, i) {
-				return xScale(i);
+				return xScale(new Date(d.timestamp_hour))
 			})
 			.attr("cy", function(d) {
 				return yScale(parseFloat(d.cold));
 			})
-      .attr("r", 5);
-      
+			.attr("r", 5)
+			.on("mouseover", function(d){tooltip.text(d.cold + '\n' + 'liters'); return tooltip.style("visibility", "visible");})
+			.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
+			.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+			.style("fill", "#008cff");
+
+			var tooltip = d3.select("#linechartWarmCold")
+				.append("div")
+				.style("position", "absolute")
+				.style("z-index", "10")
+				.style("visibility", "hidden")
+				.style("background", "#000")
+				.text("a simple tooltip");
+
+
+
 	}
 
-	updateLineChart = () => {
-		console.log("Line chart updated");
-	};
+	componentDidMount = () => {
+		console.log(this.props)
+		d3.select("#linechartWarmCold").selectAll("*").remove();
+		this.drawChart(this.props);
+	}
+
+	componentWillUpdate = (newProps) => {
+		console.log(newProps)
+		d3.select("#linechartWarmCold").selectAll("*").remove();
+		this.drawChart(newProps);
+	}
+
+
+
 
 	render() {
 		return (
-			<div id="linechartWarmCold" className="header">
-				<p> Linechart </p>
-				<input
-					type="date"
-					id="start"
-					name="trip-start"
-					value="2019-01-21"
-					min="2019-01-21"
-					onChange={this.updateLineChart}
-					max="2019-01-25"
-				/>
+			<div className="container">
+			<p> Linechart </p>
+			
 				<p id="linechartDate" />
+			<div id="linechartWarmCold" className="header">
+				
+			</div>
 			</div>
 		);
 	}
