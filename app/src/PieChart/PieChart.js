@@ -34,7 +34,6 @@ export default class PieChart extends Component {
 
 		var svg = d3.select("#piechart").append("svg")
 		    .datum(data)
-		    .attr("class","")
 		    .attr("width", width)
 		    .attr("height", height)
 		    .call(responsivefy)
