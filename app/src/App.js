@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { Route } from 'react-router-dom';
 import DetailView from "./DetailView/DetailView";
 import SelectApartment from "./SelectApartment/SelectApartment";
+import NavBar from "./NavBar/NavBar";
+
 
 import * as firebase from "firebase";
 
@@ -56,6 +59,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<NavBar/>
 				<div className="container-fluid full-height">
 					<div className="row full-height">
 						<SelectApartment />
