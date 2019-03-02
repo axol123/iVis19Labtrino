@@ -47,7 +47,7 @@ export default class About extends Component {
 									Visualization from the Royal Institute of Technology (KTH) in
 									Stockholm, Sweden. The project is a collaboration with startup company <a href="http://www.labtrino.com/">Labrino AB</a>, 
                                     a company which develops intelligent water meter systems for residental property owners. 
-                                    This web application is supposed to help property managers in their daily work by providing them a set of visualizions to gain insights about water consumption.
+                                    This web application is supposed to help property managers in their daily work by providing them a set of visualizations to gain insights about water consumption.
                                     <img src={Labtrino} className="img-fluid col-lg-4 col-6 p-4 mx-auto d-block" />
 								</p>
 								<h3 className="pb-2">Meet our Team</h3>
