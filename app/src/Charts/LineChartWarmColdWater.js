@@ -27,6 +27,7 @@ export default class LineChartWarmColdWater extends Component {
 		//console.log(option);
 		console.log(data);
 
+
 		var apartmentId = "00179bc1-d0f5-4e73-9967-74fd48bcc974";
 
 		d3.select("#linechartDate").html(startDate + "\n" + stopDate);
@@ -173,7 +174,7 @@ export default class LineChartWarmColdWater extends Component {
 				return yScale(parseFloat(d.hot));
 			})
 			.attr("r", 5)
-		  .on("mouseover", function(d){tooltip.text('Time: '+ new Date(d.timestamp_hour).getHours() + ':00' + ' Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","20px"); return tooltip.style("visibility", "visible");})
+		  .on("mouseover", function(d){tooltip.text('Time: '+ new Date(d.timestamp_hour).getHours() + ':00' + ' Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","15px"); return tooltip.style("visibility", "visible");})
       		.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
       		.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
       		.style("fill", "#ff0000");
@@ -192,7 +193,7 @@ export default class LineChartWarmColdWater extends Component {
 				return yScale(parseFloat(d.cold));
 			})
 			.attr("r", 5)
-			.on("mouseover", function(d){tooltip.text('Time: '+ new Date(d.timestamp_hour).getHours() + ':00' + ' Cold water: ' + parseFloat(d.cold).toFixed() + '\n' + 'liters').style("font-size","px"); return tooltip.style("visibility", "visible");})
+			.on("mouseover", function(d){tooltip.text('Time: '+ new Date(d.timestamp_hour).getHours() + ':00' + ' Cold water: ' + parseFloat(d.cold).toFixed() + '\n' + 'liters').style("font-size","15px"); return tooltip.style("visibility", "visible");})
 			.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
 			.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 			.style("fill", "#008cff");
@@ -205,7 +206,6 @@ export default class LineChartWarmColdWater extends Component {
 				.style("visibility", "hidden")
 				.style("background", "#000")
 				.text("a simple tooltip");
-
 
 
 	}
