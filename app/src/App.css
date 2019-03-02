@@ -1,18 +1,32 @@
 .App {
   text-align: center;
-  background-color: #141b29;
   min-height: 100vh;
 }
 
-.header {
+.text {
   text-align: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
+.bg-white{
+  background: white;
+}
 
-.bg{
-  background-color: #141b29;
+
+.placeholder{
+  min-height: 60vh;
+  width: 100vw;
+  background: black;
+  color: white;
+}
+
+.full-width{
+  width:100vw;
+}
+
+.full-height{
+  min-height: 100vh;
 }
 
 .container-fluid {

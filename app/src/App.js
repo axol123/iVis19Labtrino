@@ -32,18 +32,18 @@ class App extends Component {
 
 		// Loader animation
 		var loader = (
-			<div class="container-fluid h-100">
-				<div class="row h-100 justify-content-center  d-flex align-items-center">
-					<div class="sk-cube-grid">
-						<div class="sk-cube sk-cube1" />
-						<div class="sk-cube sk-cube2" />
-						<div class="sk-cube sk-cube3" />
-						<div class="sk-cube sk-cube4" />
-						<div class="sk-cube sk-cube5" />
-						<div class="sk-cube sk-cube6" />
-						<div class="sk-cube sk-cube7" />
-						<div class="sk-cube sk-cube8" />
-						<div class="sk-cube sk-cube9" />
+			<div className="container-fluid h-100">
+				<div className="row h-100 justify-content-center  d-flex align-items-center">
+					<div className="sk-cube-grid">
+						<div className="sk-cube sk-cube1" />
+						<div className="sk-cube sk-cube2" />
+						<div className="sk-cube sk-cube3" />
+						<div className="sk-cube sk-cube4" />
+						<div className="sk-cube sk-cube5" />
+						<div className="sk-cube sk-cube6" />
+						<div className="sk-cube sk-cube7" />
+						<div className="sk-cube sk-cube8" />
+						<div className="sk-cube sk-cube9" />
 					</div>
 				</div>
 			</div>
@@ -53,19 +53,24 @@ class App extends Component {
 		var app = (
 			<Fade>
 				<NavBar />
-				<div className="container-fluid full-height">
-					<div className="row full-height">
-						<SelectApartment />
-						<DetailView />
+				<div className="container-fluid full-height bg-light p-0">
+					<div className="row">
+					<div className="row placeholder p-0 m-0">
+					<div className="col-6 mx-auto d-flex align-items-center">
+					{/* <SelectApartment /> */}
+					<h1 className="text-center mx-auto"> Map view </h1>
 					</div>
+					</div>
+					</div>
+					<DetailView />
 				</div>
-				</Fade>
+			</Fade>
 		);
 
 		// Change to app when loading is done
 		var content = loading ? loader : app;
 
-		return <div className="App">{content}</div>;
+		return <div className="App bg-light">{content}</div>;
 	}
 }
 

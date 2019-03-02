@@ -29,7 +29,7 @@ export default class LineChartWarmColdWater extends Component {
 
 		var apartmentId = "00179bc1-d0f5-4e73-9967-74fd48bcc974";
 
-		d3.select("#linechartDate").html(startDate + "\n" + stopDate);
+		//d3.select("#linechartDate").html(startDate + "\n" + stopDate);
 
 		console.log(new Date(data[0].timestamp_hour))
 
@@ -42,8 +42,8 @@ export default class LineChartWarmColdWater extends Component {
 		console.log(filteredDate);
 
 		var margin = { top: 70, right: 70, bottom: 70, left: 70 },
-			width = window.innerWidth * 0.7 - margin.left - margin.right, // Use the window's width
-			height = window.innerHeight * 0.7 - margin.top - margin.bottom; // Use the window's height
+			width = window.innerWidth * 0.4 - margin.left - margin.right, // Use the window's width
+			height = window.innerHeight * 0.5 - margin.top - margin.bottom; // Use the window's height
 
 		console.log(margin);
 		console.log(width);
