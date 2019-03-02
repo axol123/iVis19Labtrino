@@ -18,7 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     // this simulates an async action, after which the component will render the content
-    demoAsyncCall().then(() => setTimeout(() => this.setState({ loading: false }), 100000));
+    demoAsyncCall().then(() => setTimeout(() => this.setState({ loading: false }), 3000));
   }
   
   render() {
