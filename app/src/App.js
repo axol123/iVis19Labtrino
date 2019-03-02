@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Fade from "react-reveal";
+import About from "./About/About";
 
 // App css
 import "./App.css";
@@ -55,12 +56,12 @@ class App extends Component {
 				<NavBar />
 				<div className="container-fluid full-height bg-light p-0">
 					<div className="row">
-					<div className="row placeholder p-0 m-0">
-					<div className="col-6 mx-auto d-flex align-items-center">
-					{/* <SelectApartment /> */}
-					<h1 className="text-center mx-auto"> Map view </h1>
-					</div>
-					</div>
+						<div className="row placeholder p-0 m-0">
+							<div className="col-6 mx-auto d-flex align-items-center">
+								{/* <SelectApartment /> */}
+								<h1 className="text-center mx-auto"> Map view </h1>
+							</div>
+						</div>
 					</div>
 					<DetailView />
 				</div>
@@ -70,7 +71,12 @@ class App extends Component {
 		// Change to app when loading is done
 		var content = loading ? loader : app;
 
-		return <div className="App bg-light">{content}</div>;
+		return (
+			<div className="App bg-light">
+				<About />
+				{content}
+			</div>
+		);
 	}
 }
 
