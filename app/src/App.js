@@ -3,7 +3,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import DetailView from "./DetailView/DetailView";
 import GraphChart from "./Charts/GraphChart";
-import SelectApartment from "./SelectApartment/SelectApartment";
 //import csv from '../master.csv';
 
 import * as firebase from "firebase";
@@ -26,7 +25,9 @@ class App extends Component {
 	};
 
 	readData = obj => {
-		this.setState({selectedBuilding: "52b41c98-ab21-4ad5-828b-74069bcd55e7" });
+		this.setState({selectedBuilding: "52b41c98-ab21-4ad5-828b-74069bcd55e7"});
+
+		//"1bbf041c-f23c-437e-9c9b-2bd43d310a7c"
 	};
 
 // 	updateApartment = e => {
@@ -48,7 +49,6 @@ class App extends Component {
 			<div className="App">
 				<div className="container-fluid full-height">
 					<div className="row full-height">
-						<SelectApartment />
 						<DetailView buildingid={this.state.selectedBuilding} />
 					</div>
 				</div>

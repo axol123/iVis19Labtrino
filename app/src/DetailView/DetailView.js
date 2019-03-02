@@ -4,6 +4,7 @@ import LineChart from '../Charts/LineChart';
 import BubbleChart from '../Charts/BubbleChart';
 import GraphChart from '../Charts/GraphChart';
 import LineChartWarmColdWater from '../Charts/LineChartWarmColdWater';
+import SelectApartment from "../SelectApartment/SelectApartment";
 import csv from '../master.csv';
 
 //D3 v5
@@ -19,6 +20,7 @@ class DetailView extends Component {
       buildingInfo: null,
       allDatesData: null,
       dataValidDates: null,
+      apartmentid: null,
 		};
 	}
 
@@ -69,11 +71,11 @@ class DetailView extends Component {
 
   readData() {
 
-    console.log("current id "+this.props.buildingid)
+  //  console.log("current id "+this.props.buildingid)
     var _this = this;
 
     d3.csv(csv).then(function(data) {
-      console.log(data)
+    //  console.log(data)
 
 
       //Nest for building info
@@ -83,6 +85,10 @@ class DetailView extends Component {
           return {
             building_id: v[1].building_id,
             no_apartments: d3.set(v,function(d) { return d.apartment_id }).size(),
+            apartments_id: d3.set(v,function(d) { return d.apartment_id }),
+            volume: d3.sum(v,function(d) { return d.volume; }),
+            hot: d3.sum(v,function(d) { return d.hot; }),
+            cold: d3.sum(v,function(d) { return d.cold; }),
             //data: v
           };
         })
@@ -92,11 +98,15 @@ class DetailView extends Component {
         });
 
         //Fulter on tha buildingid in props
-        console.log("buildings: "+buildings.data)
+        //console.log("buildings: "+buildings.data)
         var buildingSelected=buildings.find(d => d.key ===_this.props.buildingid).value;
 
         _this.setState({buildingInfo: buildingSelected})
-        console.log("AFTER"+_this.state.buildingInfo)
+        console.log("AFTER");
+        console.log(buildingSelected)
+        //buildingSelected.map(function(d){console.log(d)})
+
+
 
         //Dates naset for linechart
         var apartments_dates = d3.nest()
@@ -117,6 +127,8 @@ class DetailView extends Component {
             return d.key!=""&&d.key!="undefined";
           });
 
+
+
           var get_valid_dates = d3.nest()
             .key(function(d) { return d.timestamp_hour.substr(0, d.timestamp_hour.indexOf(' ')) })
             .rollup(function(v) {
@@ -132,7 +144,27 @@ class DetailView extends Component {
           _this.setState({allDatesData: get_valid_dates}, _this.updateValidData);
 
 
+
+          //
+          // //Nest på apartments per building
+          // var validApartments = d3.nest()
+          //   .key(function(d) { return d.building_id })
+          //   .rollup(function(v) {
+          //     return {
+          //       //building_id: v[1].building_id,
+          //       no_apartments: d3.set(v,function(d) { return d.apartment_id }).size(),
+          //       apartment_id: d3.set(v,function(d) { return d.apartment_id }),
+          //     };
+          //   })
+          //   .entries(data)
+          //   .filter(function(d){
+          //     return d.key!=""&&d.key!="undefined";
+          //   });
+          //
+          //   console.log("THESE ARE VALID APARTMENTS YO:"+validApartments.map(function(d){console.log(d )}));
     })
+
+
 
  // 1- Alla byggnader ---
  //   1- Gruppera på datum (summera vattenkonsumtion)
@@ -145,6 +177,11 @@ class DetailView extends Component {
 
 
   }
+  updateApartment = e => {
+    console.log(e.target.id);
+    this.setState({apartmentid: e.target.id})
+  };
+
 
   render(){
           //<LineChart data={this.props.data}/>
@@ -152,13 +189,15 @@ class DetailView extends Component {
         // <BubbleChart />
        // <GraphChart />
        //  <LineChartWarmColdWater startDate={this.state.startDate} stopDate={this.state.stopDate} />
-console.log("valid dates from state"+this.state.dataValidDates);
-console.log("all dates from state"+this.state.allDatesData);
+//console.log("valid dates from state"+this.state.dataValidDates);
+//console.log("all dates from state"+this.state.allDatesData);
 
     return(
     <div className="col-10 p-0">
       <div className="detailView header">
+      <SelectApartment info={this.state.buildingInfo} updateApartment={this.updateApartment}/>
       <BuildingInfo info={this.state.buildingInfo}/>
+
       <p>Start</p>
        <input
          type="date"
@@ -174,7 +213,7 @@ console.log("all dates from state"+this.state.allDatesData);
          onChange={this.updateDates}
        />
      <p> Details</p>
-      <LineChartWarmColdWater startDate={this.state.startDate} stopDate={this.state.stopDate} validData={this.state.dataValidDates} buildingID={this.props.buildingid} />
+      <LineChartWarmColdWater startDate={this.state.startDate} stopDate={this.state.stopDate} validData={this.state.dataValidDates} buildingID={this.props.buildingid} apartmentID={this.state.apartmentid}/>
 
 
 
