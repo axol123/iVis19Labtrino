@@ -4,6 +4,7 @@ import LineChart from '../Charts/LineChart';
 import BubbleChart from '../Charts/BubbleChart';
 import GraphChart from '../Charts/GraphChart';
 import LineChartWarmColdWater from '../Charts/LineChartWarmColdWater';
+import PieChart from "../PieChart/PieChart";
 import data from "../master.json";
 
 //D3 v5
@@ -70,6 +71,7 @@ class DetailView extends Component {
 					onChange={this.updateDates}
 				/>
       <p> Details</p>
+      <PieChart />
       <ApartmentInfo data={this.props.data}/>
      {/* <LineChart data={this.props.data}/> */}
       <LineChartWarmColdWater startDate={this.state.startDate} stopDate={this.state.stopDate} />
