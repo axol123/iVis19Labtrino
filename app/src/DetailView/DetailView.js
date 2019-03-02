@@ -5,7 +5,8 @@ import BubbleChart from '../Charts/BubbleChart';
 import GraphChart from '../Charts/GraphChart';
 import LineChartWarmColdWater from '../Charts/LineChartWarmColdWater';
 import SelectApartment from "../SelectApartment/SelectApartment";
-import csv from '../master.csv';
+import PieChart from "../PieChart/PieChart";
+import csv from '../randomizedmaster.csv';
 
 //D3 v5
 import * as d3 from "d3";
@@ -194,6 +195,7 @@ class DetailView extends Component {
 
     return(
     <div className="col-10 p-0">
+
       <div className="detailView header">
       <SelectApartment info={this.state.buildingInfo} updateApartment={this.updateApartment}/>
       <BuildingInfo info={this.state.buildingInfo}/>
@@ -213,11 +215,9 @@ class DetailView extends Component {
          onChange={this.updateDates}
        />
      <p> Details</p>
+      <BubbleChart validData={this.state.dataValidDates} buildingID={this.props.buildingid} apartmentID={this.state.apartmentid}/>
+      <PieChart validData={this.state.dataValidDates} buildingID={this.props.buildingid} apartmentID={this.state.apartmentid}/>
       <LineChartWarmColdWater startDate={this.state.startDate} stopDate={this.state.stopDate} validData={this.state.dataValidDates} buildingID={this.props.buildingid} apartmentID={this.state.apartmentid}/>
-
-
-
-
 
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./LineChartWarmColdWater.css";
-import data from "../master.json";
+//import data from "../master.json";
 
 //D3 v5
 import * as d3 from "d3";
@@ -185,7 +185,9 @@ export default class LineChartWarmColdWater extends Component {
 
       var margin = { top: 70, right: 70, bottom: 70, left: 70 },
       width = window.innerWidth * 0.7 - margin.left - margin.right, // Use the window's width
-      height = window.innerHeight * 0.7 - margin.top - margin.bottom; // Use the window's height
+      height = window.innerHeight * 0.7 - margin.top - margin.bottom,
+      viewBox="0 0 1100 500 ",
+      perserveAspectRatio="xMinYMid"; // Use the window's height
 
       // console.log(margin);
       // console.log(width);
@@ -245,6 +247,7 @@ export default class LineChartWarmColdWater extends Component {
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
+      //.call(responsivefy)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       //console.log(svg);
@@ -291,16 +294,18 @@ export default class LineChartWarmColdWater extends Component {
       .append("path")
       .datum(filteredDate) // Binds data to the line
       .attr("class", "line-hot") // Assign a class for styling
-      .attr("d", lineHot); // Calls the line generator
+      .attr("d", lineHot) // Calls the line generator
+      //.attr("data-legend", "Hot");
 
       // Append the path, bind the data, and call the line generator
       svg
       .append("path")
       .datum(filteredDate) // Binds data to the line
       .attr("class", "line-cold") // Assign a class for styling
-      .attr("d", lineCold); // Calls the line generator
-
+      .attr("d", lineCold) // Calls the line generator
+    //.attr("data-legend", "Cold");
       //  Appends a circle for each datapoint
+
 
       svg
       .selectAll(".dot-varm")
@@ -315,7 +320,7 @@ export default class LineChartWarmColdWater extends Component {
         return yScale(parseFloat(d.hot));
       })
       .attr("r", 5)
-      .on("mouseover", function(d){tooltip.text( 'Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","15px").style("background-color","#FF7675").style("padding", "10pt"); return tooltip.style("visibility", "visible");})
+      .on("mouseover", function(d){tooltip.text( 'Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","15px").style("background-color","#FF7675").style("padding", "10pt").style("color","#fff").style("border-radius","5px"); return tooltip.style("visibility", "visible");})
       .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
       .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
       .style("fill", "#FF7675");
@@ -339,7 +344,6 @@ export default class LineChartWarmColdWater extends Component {
       .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
       .style("fill", "#6095F9");
 
-
       var tooltip = d3.select("#linechartWarmCold")
       .append("div")
       .style("position", "absolute")
@@ -348,9 +352,88 @@ export default class LineChartWarmColdWater extends Component {
       .style("background", "#000")
       .text("a simple tooltip");
 
+      var legendRectSize = 10;
+      var legendSpacing = 1;
+
+      var legendHot = svg.selectAll('.legendHot')                     // NEW
+         .data([" Hot"])                                   // NEW
+         .enter()                                                // NEW
+         .append('g')                                            // NEW
+         .attr('class', 'legendHot')                                // NEW
+         .attr('transform', function(d, i) {                     // NEW
+
+           return 'translate(' + width+ ',' + 50+ ')';        // NEW
+         });
+                                                  // NEW
+       legendHot.append('rect')                                     // NEW
+         .attr('width', legendRectSize)                          // NEW
+         .attr('height', legendRectSize)                         // NEW
+         .style('fill', "#FF7675")                                   // NEW
+         .style('stroke', "#FF7675");
+
+
+       legendHot.append('text')                                     // NEW
+         .attr('x', legendRectSize + legendSpacing)              // NEW
+         .attr('y', legendRectSize - legendSpacing)              // NEW
+         .text(function(d) { return d; });
+
+         var legendCold = svg.selectAll('.legendCold')                     // NEW
+            .data(["Cold"])                                   // NEW
+            .enter()                                                // NEW
+            .append('g')                                            // NEW
+            .attr('class', 'legendCold')                                // NEW
+            .attr('transform', function(d, i) {                     // NEW
+              // var height = legendRectSize + legendSpacing;          // NEW
+              // var offset =  height / 2;     // NEW
+              // var horz = -2 * legendRectSize;                       // NEW
+              // var vert = i * height - offset;                       // NEW
+              return 'translate(' + width + ',' + 20 + ')';        // NEW
+            });
+                                                     // NEW
+          legendCold.append('rect')                                     // NEW
+            .attr('width', legendRectSize)                          // NEW
+            .attr('height', legendRectSize)                         // NEW
+            .style('fill', "#6095F9")                                   // NEW
+            .style('stroke', "#6095F9");
+
+          legendCold.append('text')                                     // NEW
+            .attr('x', legendRectSize + legendSpacing)              // NEW
+            .attr('y', legendRectSize - legendSpacing)              // NEW
+            .text(function(d) { return d; });
+
+
+            function responsivefy(svg) {
+              // get container + svg aspect ratio
+              var container = d3.select(svg.node().parentNode),
+              width = parseInt(svg.style("width")),
+              height = parseInt(svg.style("height")),
+              aspect = width / height;
+
+              // add viewBox and preserveAspectRatio properties,
+              // and call resize so that svg resizes on inital page load
+              svg.attr("viewBox", "0 0 " + width + " " + height)
+              .attr("perserveAspectRatio", "xMinYMid")
+              .call(resize);
+
+              // to register multiple listeners for same event type,
+              // you need to add namespace, i.e., 'click.foo'
+              // necessary if you call invoke this function for multiple svgs
+              // api docs: https://github.com/mbostock/d3/wiki/Selections#on
+              d3.select(window).on("resize." + container.attr("id"), resize);
+
+              // get width of container and resize svg to fit it
+              function resize() {
+                var targetWidth = parseInt(container.style("width"));
+                svg.attr("width", targetWidth);
+                svg.attr("height", Math.round(targetWidth / aspect));
+              }
+            }
+
 
 
     }
+
+
 
     componentDidMount = () => {
       console.log(this.props)
@@ -377,12 +460,16 @@ export default class LineChartWarmColdWater extends Component {
 
 
     render() {
+      // <div className="legend"><p className="line-hot">Hot</p></div>
+      // <div className="legend"><p className="line-cold">Cold</p></div>
       return (
         <div className="container">
         <p> Linechart </p>
           <div id="linechartWarmCold" className="header">
 
+
         </div>
+
         </div>
       );
     }
