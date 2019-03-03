@@ -48,7 +48,7 @@ export default class About extends Component {
 									Stockholm, Sweden. The project is a collaboration with startup company <a href="http://www.labtrino.com/">Labrino AB</a>, 
                                     a company which develops intelligent water meter systems for residental property owners. 
                                     This web application is supposed to help property managers in their daily work by providing them a set of visualizations to gain insights about water consumption.
-                                    <img src={Labtrino} className="img-fluid col-lg-4 col-6 p-4 mx-auto d-block" />
+                                    <img src={Labtrino} alt="Labtrino Logo" className="img-fluid col-lg-4 col-6 p-4 mx-auto d-block" />
 								</p>
 								<h3 className="pb-2">Meet our Team</h3>
 								<p className="text-left">
@@ -96,7 +96,7 @@ export default class About extends Component {
 											</div>
 											<div className="col-12">
 												<p className="text-muted m-0 mt-2">Filippa Bång</p>
-												<a href="mailto:phjorth@kth.se">fban@kth.se</a>
+												<a href="mailto:fban@kth.se">fban@kth.se</a>
 											</div>
 										</div>
 
@@ -110,7 +110,7 @@ export default class About extends Component {
 											</div>
 											<div className="col-12">
 												<p className="text-muted m-0 mt-2">Evelina Hedberg</p>
-												<a href="mailto:phjorth@kth.se">evehed@kth.se</a>
+												<a href="mailto:evehed@kth.se">evehed@kth.se</a>
 											</div>
 										</div>
 
@@ -124,7 +124,7 @@ export default class About extends Component {
 											</div>
 											<div className="col-12">
 												<p className="text-muted m-0 mt-2">Ibrahim Asfadai</p>
-												<a href="mailto:phjorth@kth.se">asfadai@kth.se</a>
+												<a href="mailto:asfadai@kth.se">asfadai@kth.se</a>
 											</div>
 										</div>
 
@@ -138,7 +138,7 @@ export default class About extends Component {
 											</div>
 											<div className="col-12">
 												<p className="text-muted m-0 mt-2">Axel Karlsson</p>
-												<a href="mailto:phjorth@kth.se">axelkarl@kth.se</a>
+												<a href="mailto:axelkarl@kth.se">axelkarl@kth.se</a>
 											</div>
 										</div>
 									</div>

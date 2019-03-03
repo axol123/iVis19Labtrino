@@ -11,7 +11,6 @@ import { Route } from "react-router-dom";
 
 // Components
 import DetailView from "./DetailView/DetailView";
-import SelectApartment from "./SelectApartment/SelectApartment";
 import NavBar from "./NavBar/NavBar";
 
 class App extends Component {
@@ -55,10 +54,10 @@ class App extends Component {
 			<Fade>
 				<NavBar />
 				<div className="container-fluid full-height bg-light p-0">
-					<div className="row">
+					<div className="row mx-auto">
 						<div className="row placeholder p-0 m-0">
 							<div className="col-6 mx-auto d-flex align-items-center">
-								{/* <SelectApartment /> */}
+								{/* <MapView /> */}
 								<h1 className="text-center mx-auto"> Map view </h1>
 							</div>
 						</div>

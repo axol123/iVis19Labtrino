@@ -70,10 +70,12 @@ class DetailView extends Component {
 						/>
 					</div>
 				</div>
+
 				<div className="container full-height mx-auto">
 					<div className="row py-4">
-						<h3 className="text-center mx-auto"> Details</h3>
-						<div className="row py-5">
+						<h3 className="text-center mx-auto">Details</h3>
+
+						<div className="row py-3">
 							<div className="col-7 m-3 p-3 bg-white">
 								<LineChartWarmColdWater
 									startDate={this.state.startDate}
@@ -84,11 +86,18 @@ class DetailView extends Component {
 								<PieChart />
 							</div>
 						</div>
-						<ApartmentInfo data={this.props.data} />
-						{/* <LineChart data={this.props.data}/> */}
 
-						<BubbleChart data={this.props.data} />
-						{/* <GraphChart /> */}
+						<div className="row col-11 m-3 p-3 bg-white">
+							{/* <BubbleChart data={this.props.data} /> */}
+
+							<h1 className="text-center mx-auto">BubbleChart view </h1>
+						</div>
+
+						{/*
+						<div className="col-12 bg-white">
+						<ApartmentInfo data={this.props.data} />
+						</div>
+						 */}
 					</div>
 				</div>
 			</div>

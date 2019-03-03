@@ -16,7 +16,14 @@
 
 .placeholder{
   min-height: 60vh;
-  width: 100vw;
+  min-width: 100vw;
+  background: black;
+  color: white;
+}
+
+.placeholder2{
+  min-height: 30vh;
+  min-width:100%;
   background: black;
   color: white;
 }
