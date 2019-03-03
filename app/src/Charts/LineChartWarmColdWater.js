@@ -20,7 +20,7 @@ export default class LineChartWarmColdWater extends Component {
 		var startDate = new Date(props.startDate);
 		var stopDate = new Date(props.stopDate);
 		console.log(stopDate);
-		stopDate = stopDate.setDate(stopDate.getDate());
+		stopDate = stopDate.setDate(stopDate.getDate()+1);
 		stopDate = new Date(stopDate);
 		console.log(startDate);
 		console.log(stopDate);
@@ -29,7 +29,7 @@ export default class LineChartWarmColdWater extends Component {
 
 		var apartmentId = "00179bc1-d0f5-4e73-9967-74fd48bcc974";
 
-		d3.select("#linechartDate").html(startDate + "\n" + stopDate);
+		//d3.select("#linechartDate").html(startDate + "\n" + stopDate);
 
 		console.log(new Date(data[0].timestamp_hour))
 
@@ -42,8 +42,8 @@ export default class LineChartWarmColdWater extends Component {
 		console.log(filteredDate);
 
 		var margin = { top: 70, right: 70, bottom: 70, left: 70 },
-			width = window.innerWidth * 0.5 - margin.left - margin.right, // Use the window's width
-			height = window.innerHeight * 0.7 - margin.top - margin.bottom; // Use the window's height
+			width = window.innerWidth * 0.35 - margin.left - margin.right, // Use the window's width
+			height = window.innerHeight * 0.5 - margin.top - margin.bottom; // Use the window's height
 
 		console.log(margin);
 		console.log(width);
@@ -116,7 +116,7 @@ export default class LineChartWarmColdWater extends Component {
 				"translate(" + width / 2 + " ," + (height + margin.top - 20) + ")"
 			)
 			.style("text-anchor", "middle")
-			.text("Hour");
+			.text("Time");
 
 		// text label for the y axis
 		svg
@@ -134,13 +134,15 @@ export default class LineChartWarmColdWater extends Component {
 			.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+			.call(d3.axisBottom(xScale))
+			.style("font-size",15); // Create an axis component with d3.axisBottom
 
 		// Call the y axis in a group tag
 		svg
 			.append("g")
 			.attr("class", "y axis")
-			.call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+			.call(d3.axisLeft(yScale))
+			.style("font-size",15); // Create an axis component with d3.axisLeft
 
 		// Append the path, bind the data, and call the line generator
 		svg
@@ -171,8 +173,8 @@ export default class LineChartWarmColdWater extends Component {
 				return yScale(parseFloat(d.hot));
 			})
 			.attr("r", 5)
-		  .on("mouseover", function(d){tooltip.text(d.hot + '\n' + 'liters'); return tooltip.style("visibility", "visible");})
-      		.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-220)+"px");})
+		  .on("mouseover", function(d){tooltip.text('Time: '+ new Date(d.timestamp_hour).getHours() + ':00' + ' Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","20px"); return tooltip.style("visibility", "visible");})
+      		.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
       		.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
       		.style("fill", "#ff0000");
 
@@ -190,10 +192,11 @@ export default class LineChartWarmColdWater extends Component {
 				return yScale(parseFloat(d.cold));
 			})
 			.attr("r", 5)
-			.on("mouseover", function(d){tooltip.text(d.cold + '\n' + 'liters'); return tooltip.style("visibility", "visible");})
+			.on("mouseover", function(d){tooltip.text('Time: '+ new Date(d.timestamp_hour).getHours() + ':00' + ' Cold water: ' + parseFloat(d.cold).toFixed() + '\n' + 'liters').style("font-size","px"); return tooltip.style("visibility", "visible");})
 			.on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
 			.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 			.style("fill", "#008cff");
+
 
 			var tooltip = d3.select("#linechartWarmCold")
 				.append("div")

@@ -1,16 +1,114 @@
 .App {
   text-align: center;
-  background-color: #141b29;
   min-height: 100vh;
 }
 
-.header {
+.text {
   text-align: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
+.bg-white{
+  background: white;
+}
 
-.bg{
-  background-color: #141b29;
+
+.placeholder{
+  min-height: 60vh;
+  min-width: 100vw;
+  background: black;
+  color: white;
+}
+
+.placeholder-text{
+  min-height: 20vh;
+}
+
+.full-width{
+  width:100vw;
+}
+
+.full-height{
+  min-height: 100vh;
+}
+
+.container-fluid {
+	min-height:100% !important;
+	overflow: hidden;
+	position: absolute;
+}
+
+
+#root:not(:empty) + .sk-cube-grid {
+  display: none;
+}
+
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  
+  float: left;
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+
+.sk-cube-grid .sk-cube1 {
+  animation-delay: 0.2s;
+  background-color: #FF7675;
+}
+
+.sk-cube-grid .sk-cube2 {
+  animation-delay: 0.3s;
+  background-color: #6095F9;
+}
+
+.sk-cube-grid .sk-cube3 {
+  animation-delay: 0.4s;
+  background-color: #FF7675;
+}
+
+.sk-cube-grid .sk-cube4 {
+  animation-delay: 0.1s;
+  background-color: #6095F9;
+}
+
+.sk-cube-grid .sk-cube5 {
+  animation-delay: 0.2s;
+  background-color: #FF7675;
+}
+
+.sk-cube-grid .sk-cube6 {
+  animation-delay: 0.3s;
+  background-color: #6095F9;
+}
+
+.sk-cube-grid .sk-cube7 {
+  animation-delay: 0s;
+  background-color: #FF7675;
+}
+
+.sk-cube-grid .sk-cube8 {
+  animation-delay: 0.1s;
+  background-color: #6095F9;
+}
+
+.sk-cube-grid .sk-cube9 {
+  animation-delay: 0.2s;
+  background-color: #FF7675;
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%,
+  70%,
+  100% {
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    transform: scale3D(0, 0, 1);
+  }
 }

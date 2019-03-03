@@ -54,7 +54,7 @@ export default class SelectApartment extends Component {
 			</li>
 		));
 		return (
-			<div className="col-2 p-0">
+			<div className="p-0">
 				<div className="apartment-list p-0">
 					<h3 className="apartments-title">Apartments</h3>
 					<br />

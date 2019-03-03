@@ -6,14 +6,20 @@
     "bootstrap": "^4.3.1",
     "d3": "^5.9.1",
     "d3-array": "^2.0.3",
+    "dom-helpers": "^3.4.0",
     "firebase": "^5.8.2",
     "jquery": "^3.3.1",
+    "loose-envify": "^1.4.0",
     "popper.js": "^1.14.7",
+    "prop-types": "^15.7.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-map-gl": "^4.0.13",
+    "react-lifecycles-compat": "^3.0.4",
     "react-reveal": "^1.2.2",
-    "react-scripts": "2.1.5"
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "react-transition-group": "^2.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
