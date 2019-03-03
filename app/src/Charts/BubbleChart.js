@@ -181,7 +181,8 @@ export default class BubbleChart extends Component {
         .style("position", "absolute")
         .style("z-index", "10")
         .style("visibility", "hidden")
-        .style("background", "#000");
+        .style("background", "#000")
+        .style("pointer-events", "none");;
 
         var circles = svg.selectAll(".apartment_id")
         .data(nestedData)
@@ -210,7 +211,7 @@ export default class BubbleChart extends Component {
             return "url(#grad"+d.key+")"
           }
         })
-        .on("mouseover", function(d){tooltip.text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold).style("font-size","15px").style("background-color","#C4C6CC").style("padding", "10pt").style("color","#7F87A0").style("border-radius","5px").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
+        .on("mouseover", mouseover)
         .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 
@@ -234,7 +235,8 @@ export default class BubbleChart extends Component {
         .style("position", "absolute")
         .style("z-index", "10")
         .style("visibility", "hidden")
-        .style("background", "#000");
+        .style("background", "#000")
+        .style("pointer-events", "none");
 
         var circles = svg.selectAll(".apartment_id")
         .data(nestedData)
@@ -252,13 +254,33 @@ export default class BubbleChart extends Component {
           grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#FF7675");
           return "url(#grad"+d.key+")"
         })
-        .on("mouseover", function(d){tooltip.text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold).style("font-size","15px").style("background-color","#C4C6CC").style("padding", "10pt").style("color","#7F87A0").style("border-radius","5px").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
+        .on("mouseover", mouseover)
         .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 
         //this.setState({circles: circles}, this.makeForces(nestedData));
 
+        
+
     }
+
+    function mouseover(d){
+      tooltip.text("Apartment: " + d.key 
+        + " Building: id "+ (d.value.building_id) 
+        + ", Rooms: "+ d.value.apartment_size 
+        + ", Water volume: " + Math.round(d.value.volume)
+        +  ", Hot water: " + Math.round(d.value.hot) 
+        + ", Cold water "+ Math.round(d.value.cold))
+      .style("font-size","15px")
+      .style("background-color","#C4C6CC")
+      .style("padding", "10pt")
+      .style("color","#7F87A0")
+      .style("border-radius","5px")
+      .style( "box-shadow", "1px 1px 20px #a7a4a4"); 
+
+      return tooltip.style("visibility", "visible");
+    }
+    
     this.makeForces(nestedData, circles)
 
     }
@@ -506,10 +528,10 @@ sort_volume = e => {
     .append("text").text("Descending sorted water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
   labelsvg
-    .append("text").text(Math.round(this.max * 100) / 100).attr("y", 50).attr("x", 0)
+    .append("text").text(Math.round(this.max)).attr("y", 50).attr("x", 0)
 
   labelsvg
-    .append("text").text(Math.round(this.min * 100) / 100).attr("y", 50).attr("x", this.width-100)
+    .append("text").text(Math.round(this.min)).attr("y", 50).attr("x", this.width-100)
 
   this.sim
     .force("x", d3.forceX(function(d) {
@@ -552,10 +574,10 @@ sort_volume_hot = e => {
     .append("text").text("Descending sorted hot water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
   labelsvg
-    .append("text").text(Math.round(this.max_hot * 100) / 100).attr("y", 50).attr("x", 0)
+    .append("text").text(Math.round(this.max_hot)).attr("y", 50).attr("x", 0)
 
   labelsvg
-    .append("text").text(Math.round(this.min_hot * 100) / 100).attr("y", 50).attr("x", this.width-100)
+    .append("text").text(Math.round(this.min_hot)).attr("y", 50).attr("x", this.width-100)
 
   this.sim
     .force("x", d3.forceX(function(d) {
@@ -598,10 +620,10 @@ sort_volume_cold = e => {
     .append("text").text("Descending sorted cold water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
   labelsvg
-    .append("text").text(Math.round(this.max_cold * 100) / 100).attr("y", 50).attr("x", 0)
+    .append("text").text(Math.round(this.max_cold)).attr("y", 50).attr("x", 0)
 
   labelsvg
-    .append("text").text(Math.round(this.min_cold * 100) / 100).attr("y", 50).attr("x", this.width-100)
+    .append("text").text(Math.round(this.min_cold)).attr("y", 50).attr("x", this.width-100)
 
   this.sim
     .force("x", d3.forceX(function(d) {
@@ -642,7 +664,7 @@ combine = e => {
   this.sim
     .force("x", this.forceX_combine)
     .force("y", this.forceY.strength(0.05))
-    .alphaTarget(0.3)
+    .alphaTarget(0.5)
     .restart()
 
     setTimeout(function() {
@@ -654,7 +676,7 @@ combine = e => {
           .alphaTarget(0)
           .restart()
         }
-     }, 300);
+     }, 1000);
 
      //this.wait_combine = false;
 
