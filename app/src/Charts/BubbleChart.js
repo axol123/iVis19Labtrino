@@ -42,6 +42,7 @@ export default class BubbleChart extends Component {
     this.sort_scale = false;
     this.sort_hot_scale = false;
     this.sort_cold_scale = false;
+    this.should_highlight = true;
 
 
     // this.max = this.max.bind(this);
@@ -65,7 +66,9 @@ export default class BubbleChart extends Component {
     if(this.prevProps !== newProps){
       d3.select("#chart").selectAll("*").remove();
       //  if(newProps !== prevProps){
+      this.should_highlight=true;
       this.drawChart();
+
     }
   }
 
@@ -80,7 +83,9 @@ export default class BubbleChart extends Component {
     if(this.props.validData != null){
 
       var buildingId = this.props.buildingID;
-      var apartmentId = this.props.apartmentID;
+
+      var apartmentId = this.should_highlight ? this.props.apartmentID: null;
+      //var apartmentId = this.props.apartmentID;
 
       if(this.props.buildingID != null){
 
@@ -280,7 +285,7 @@ export default class BubbleChart extends Component {
 
       return tooltip.style("visibility", "visible");
     }
-    
+
     this.makeForces(nestedData, circles)
 
     }
@@ -645,40 +650,47 @@ sort_volume_cold = e => {
 }
 combine = e => {
 
-  //const {sim}=this.state;
-  var _this = this;
-  this.wait_apartments=false;
-  this.wait_combine = true;
-  this.wait_volume=false;
-  this.wait_hot=false;
-  this.wait_cold=false;
 
-  var labelsvg = d3.select("#chart").select("#labels")
-
-  labelsvg
-    .selectAll("text")
-    .remove()
+  d3.select("#chart").selectAll("*").remove();
+  //  if(newProps !== prevProps){
+  this.should_highlight=false;
+  this.drawChart();
+  
 
 
-  //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: true, wait_volume: false, wait_hot: false, wait_cold: false});
-  this.sim
-    .force("x", this.forceX_combine)
-    .force("y", this.forceY.strength(0.05))
-    .alphaTarget(0.5)
-    .restart()
 
-    setTimeout(function() {
-      console.log("timeout");
-      //var {wait_combine} = _this.state;
-      if(_this.wait_combine){
-        console.log("wait_combine=true");
-        _this.sim
-          .alphaTarget(0)
-          .restart()
-        }
-     }, 1000);
+  // var _this = this;
+  // this.wait_apartments=false;
+  // this.wait_combine = true;
+  // this.wait_volume=false;
+  // this.wait_hot=false;
+  // this.wait_cold=false;
 
-     //this.wait_combine = false;
+  // var labelsvg = d3.select("#chart").select("#labels")
+
+  // labelsvg
+  //   .selectAll("text")
+  //   .remove()
+
+
+  // this.sim
+  //   .force("x", this.forceX_combine)
+  //   .force("y", this.forceY.strength(0.05))
+  //   .alphaTarget(0.5)
+  //   .restart()
+
+  //   setTimeout(function() {
+  //     console.log("timeout");
+  //     //var {wait_combine} = _this.state;
+  //     if(_this.wait_combine){
+  //       console.log("wait_combine=true");
+  //       _this.sim
+  //         .alphaTarget(0)
+  //         .restart()
+  //       }
+  //    }, 1000);
+
+
 
 }
 
