@@ -155,117 +155,111 @@ export default class BubbleChart extends Component {
             _this.min_cold = d.value.cold;
           }
         });
-        //const {width} = this.state;
         this.width = 1000;
         this.radius_scale = d3.scaleSqrt().domain([this.min, this.max]).range([4, 30]);
         this.sort_scale = d3.scaleSqrt().domain([this.min, this.max]).range([this.width, 0]);
         this.sort_hot_scale = d3.scaleSqrt().domain([this.min_hot, this.max_hot]).range([this.width, 0]);
         this.sort_cold_scale = d3.scaleSqrt().domain([this.min_cold, this.max_cold]).range([this.width, 0]);
-        //console.log(max_apartment.value.volume+" "+min_apartment.value.volume)
-        console.log("hereeeee");
-        console.log(filteredDate)
-        //this.drawChart(filteredDate)
       }
 
-      //   this.setState({
-      //     radius_scale:radius_scale,
-      //     sort_scale: sort_scale,
-      //     sort_hot_scale: sort_hot_scale,
-      //     sort_cold_scale: sort_cold_scale,
-      //     apartments: nestedData,
-      //     min: min,
-      //     max: max,
-      //     min_hot: min_hot,
-      //     max_hot: max_hot,
-      //     min_cold: min_cold,
-      //     max_cold: max_cold })// _this.drawChart)
-      //
-      // }
+      if(apartmentId != null){
+        var labels = d3.select("#chart")
+        .append("g")
+        .attr("id", "labels")
+        .attr("height", 60)
+        .attr("width", this.width)
 
+        var svg = d3.select("#chart")
+        .append("svg")
+        .attr("height", this.height)
+        .attr("width", this.width)
+        .append("g")
+        .attr("transform", "translate(0,0)")
 
+        var tooltip = d3.select("#chart")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .style("background", "#000");
 
-      var labels = d3.select("#chart")
-      .append("g")
-      .attr("id", "labels")
-      .attr("height", 60)
-      .attr("width", this.width)
+        var circles = svg.selectAll(".apartment_id")
+        .data(nestedData)
+        .enter().append("circle")
+        .attr("class", "apartment")
+        .attr("r", function(d){
+          return _this.radius_scale(d.value.volume);
+        })
+        .attr("fill", function(d){
+          if(d.value.apartment_id != apartmentId){
+            var hot_percentage=Math.floor(d.value.hot/d.value.volume*100);
+            var cold_percentage=100-hot_percentage;
+            var grad = svg.append("defs").append("linearGradient").attr("id", "grad"+d.key)
+            .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
+            grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#b7cdf7");
+            grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#f9b6b6");
+            return "url(#grad"+d.key+")"
+          }
+          else{
+            var hot_percentage=Math.floor(d.value.hot/d.value.volume*100);
+            var cold_percentage=100-hot_percentage;
+            var grad = svg.append("defs").append("linearGradient").attr("id", "grad"+d.key)
+            .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
+            grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#6095F9");
+            grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#FF7675");
+            return "url(#grad"+d.key+")"
+          }
+        })
+        .on("mouseover", function(d){tooltip.text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold).style("font-size","15px").style("background-color","#C4C6CC").style("padding", "10pt").style("color","#7F87A0").style("border-radius","5px").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
+        .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
+        .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 
-      var svg = d3.select("#chart")
-      .append("svg")
-      .attr("height", this.height)
-      .attr("width", this.width)
-      .append("g")
-      .attr("transform", "translate(0,0)")
+      }
+      else{
+        var labels = d3.select("#chart")
+        .append("g")
+        .attr("id", "labels")
+        .attr("height", 60)
+        .attr("width", this.width)
 
-      var tooltip = d3.select("#chart")
-      .append("div")
-      .style("position", "absolute")
-      .style("z-index", "10")
-      .style("visibility", "hidden")
-      .style("background", "#000");
+        var svg = d3.select("#chart")
+        .append("svg")
+        .attr("height", this.height)
+        .attr("width", this.width)
+        .append("g")
+        .attr("transform", "translate(0,0)")
 
-      // var showTooltip = function(d) {
-      //   // tooltip
-      //   // .transition()
-      //   // .duration(200)
-      //   //tooltip
-      //   //.style("opacity", 1)
-      //   // .text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold); return
-      //   // .style("left", (d3.event.pageX-200) + "px")
-      //   // .style("top", (d3.event.pageY-20) + "px")
-      //   // return tooltip.style("visibility", "visible");
-      //
-      //   // .on("mouseover", function(d){tooltip.text( 'Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","15px").style("background-color","#FF7675").style("padding", "10pt").style("color","#fff").style("border-radius","5px"); return tooltip.style("visibility", "visible");})
-      //   // .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
-      //   // .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
-      // }
-      //
-      // var moveTooltip = function(d) {
-      //   tooltip
-      //   .style("left", (d3.mouse(this)[0]+30) + "px")
-      //   .style("top", (d3.mouse(this)[1]+30) + "px")
-      // }
-      //
-      // var hideTooltip = function(d) {
-      //   tooltip
-      //   .transition()
-      //   .duration(200)
-      //   .style("opacity", 0)
-      // }
+        var tooltip = d3.select("#chart")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .style("background", "#000");
 
-      var circles = svg.selectAll(".apartment_id")
-      .data(nestedData)
-      .enter().append("circle")
-      .attr("class", "apartment")
-      .attr("r", function(d){
-        return _this.radius_scale(d.value.volume);
-      })
-      .attr("fill", function(d){
-        var hot_percentage=Math.floor(d.value.hot/d.value.volume*100);
-        var cold_percentage=100-hot_percentage;
+        var circles = svg.selectAll(".apartment_id")
+        .data(nestedData)
+        .enter().append("circle")
+        .attr("class", "apartment")
+        .attr("r", function(d){
+          return _this.radius_scale(d.value.volume);
+        })
+        .attr("fill", function(d){
+          var hot_percentage=Math.floor(d.value.hot/d.value.volume*100);
+          var cold_percentage=100-hot_percentage;
+          var grad = svg.append("defs").append("linearGradient").attr("id", "grad"+d.key)
+          .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
+          grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#6095F9");
+          grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#FF7675");
+          return "url(#grad"+d.key+")"
+        })
+        .on("mouseover", function(d){tooltip.text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold).style("font-size","15px").style("background-color","#C4C6CC").style("padding", "10pt").style("color","#7F87A0").style("border-radius","5px").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
+        .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
+        .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 
+        //this.setState({circles: circles}, this.makeForces(nestedData));
 
-
-        // Konstig data eller fel i rollup?
-        // console.log(d.value.hot)
-        // console.log(d.value.cold)
-        // console.log(hot_percentage);
-        // console.log(cold_percentage);
-        var grad = svg.append("defs").append("linearGradient").attr("id", "grad"+d.key)
-        .attr("x1", "0%").attr("x2", "0%").attr("y1", "100%").attr("y2", "0%");
-        grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#6095F9");
-        grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#FF7675");
-        return "url(#grad"+d.key+")"
-      })
-      .on("mouseover", function(d){tooltip.text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold).style("font-size","15px").style("background-color","#C4C6CC").style("padding", "10pt").style("color","#7F87A0").style("border-radius","5px").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
-      .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
-      .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
-
-      //this.setState({circles: circles}, this.makeForces(nestedData));
-
-      this.makeForces(nestedData, circles)
-
-
+    }
+    this.makeForces(nestedData, circles)
 
     }
 
