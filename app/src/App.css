@@ -21,11 +21,8 @@
   color: white;
 }
 
-.placeholder2{
-  min-height: 30vh;
-  min-width:100%;
-  background: black;
-  color: white;
+.placeholder-text{
+  min-height: 20vh;
 }
 
 .full-width{

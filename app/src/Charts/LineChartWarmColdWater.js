@@ -42,7 +42,7 @@ export default class LineChartWarmColdWater extends Component {
 		console.log(filteredDate);
 
 		var margin = { top: 70, right: 70, bottom: 70, left: 70 },
-			width = window.innerWidth * 0.4 - margin.left - margin.right, // Use the window's width
+			width = window.innerWidth * 0.35 - margin.left - margin.right, // Use the window's width
 			height = window.innerHeight * 0.5 - margin.top - margin.bottom; // Use the window's height
 
 		console.log(margin);
