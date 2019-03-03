@@ -11,6 +11,7 @@
     "popper.js": "^1.14.7",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-map-gl": "^4.0.13",
     "react-reveal": "^1.2.2",
     "react-scripts": "2.1.5"
   },

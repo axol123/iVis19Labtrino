@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import DetailView from "./DetailView/DetailView";
 import SelectApartment from "./SelectApartment/SelectApartment";
+import MapView from "./MapView/MapView";
 
 import * as firebase from "firebase";
 
@@ -56,6 +57,8 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
+				<MapView />
+
 				<div className="container-fluid full-height">
 					<div className="row full-height">
 						<SelectApartment />
