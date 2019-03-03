@@ -24,7 +24,25 @@ export default class BubbleChart extends Component {
     this.max_cold = 0;
     this.min_cold = 20000;
     this.width = 1000;
-    this.height = 1000;
+    this.height = 500;
+    this.wait_buildings = false;
+    this.wait_apartments = false;
+    this.wait_volume = false;
+    this.wait_hot = false;
+    this.wait_cold = false;
+    this.wait_combine = false;
+    this.sim = false;
+    this.force_collide = false;
+    this.forceX_separate = false;
+    this.forceX_combine = false;
+    this.forceY = false;
+    this.forceX_separate_rooms = false;
+    this.forceY_separate_rooms = false;
+    this.radius_scale = false;
+    this.sort_scale = false;
+    this.sort_hot_scale = false;
+    this.sort_cold_scale = false;
+
 
     // this.max = this.max.bind(this);
     // this.min = this.min.bind(this);
@@ -45,7 +63,7 @@ export default class BubbleChart extends Component {
 
   componentDidUpdate = (newProps) => {
     if(this.prevProps !== newProps){
-      //d3.select("#piechart").selectAll("*").remove();
+      d3.select("#chart").selectAll("*").remove();
       //  if(newProps !== prevProps){
       this.drawChart();
     }
@@ -167,7 +185,7 @@ export default class BubbleChart extends Component {
 
 
       var labels = d3.select("#chart")
-      .append("svg")
+      .append("g")
       .attr("id", "labels")
       .attr("height", 60)
       .attr("width", this.width)
@@ -181,37 +199,39 @@ export default class BubbleChart extends Component {
 
       var tooltip = d3.select("#chart")
       .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "black")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .style("background", "#000");
 
-      .style("border-radius", "5px")
-      .style("padding", "10px")
-      .style("color", "white")
-
-      var showTooltip = function(d) {
-        tooltip
-        .transition()
-        .duration(200)
-        tooltip
-        .style("opacity", 1)
-        .html("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold)
-        .style("left", (d3.mouse(this)[0]+30) + "px")
-        .style("top", (d3.mouse(this)[1]+30) + "px")
-      }
-
-      var moveTooltip = function(d) {
-        tooltip
-        .style("left", (d3.mouse(this)[0]+30) + "px")
-        .style("top", (d3.mouse(this)[1]+30) + "px")
-      }
-
-      var hideTooltip = function(d) {
-        tooltip
-        .transition()
-        .duration(200)
-        .style("opacity", 0)
-      }
+      // var showTooltip = function(d) {
+      //   // tooltip
+      //   // .transition()
+      //   // .duration(200)
+      //   //tooltip
+      //   //.style("opacity", 1)
+      //   // .text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold); return
+      //   // .style("left", (d3.event.pageX-200) + "px")
+      //   // .style("top", (d3.event.pageY-20) + "px")
+      //   // return tooltip.style("visibility", "visible");
+      //
+      //   // .on("mouseover", function(d){tooltip.text( 'Hot water: ' + parseFloat(d.hot).toFixed()  + '\n' + 'liters').style("font-size","15px").style("background-color","#FF7675").style("padding", "10pt").style("color","#fff").style("border-radius","5px"); return tooltip.style("visibility", "visible");})
+      //   // .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
+      //   // .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+      // }
+      //
+      // var moveTooltip = function(d) {
+      //   tooltip
+      //   .style("left", (d3.mouse(this)[0]+30) + "px")
+      //   .style("top", (d3.mouse(this)[1]+30) + "px")
+      // }
+      //
+      // var hideTooltip = function(d) {
+      //   tooltip
+      //   .transition()
+      //   .duration(200)
+      //   .style("opacity", 0)
+      // }
 
       var circles = svg.selectAll(".apartment_id")
       .data(nestedData)
@@ -237,12 +257,14 @@ export default class BubbleChart extends Component {
         grad.append("stop").attr("offset", cold_percentage+"%").style("stop-color", "#FF7675");
         return "url(#grad"+d.key+")"
       })
-      .on("mouseover", showTooltip)
-      .on("mousemove", moveTooltip)
-      .on("mouseout", hideTooltip)
+      .on("mouseover", function(d){tooltip.text("Apartment: " + d.key + " Building: id "+ (d.value.building_id) + ", Rooms: "+ d.value.apartment_size + ", Water volume: " + d.value.volume+  ", Hot water: " + d.value.hot + ", Cold water "+ d.value.cold).style("font-size","15px").style("background-color","#C4C6CC").style("padding", "10pt").style("color","#7F87A0").style("border-radius","5px").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
+      .on("mousemove", function(){return tooltip.style("top", (d3.event.pageY-20)+"px").style("left",(d3.event.pageX-200)+"px");})
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
 
       //this.setState({circles: circles}, this.makeForces(nestedData));
+
       this.makeForces(nestedData, circles)
+
 
 
     }
@@ -255,20 +277,83 @@ export default class BubbleChart extends Component {
     var _this = this;
 
     if(circles != null){
-      var sim = d3.forceSimulation();
+      this.sim = d3.forceSimulation();
 
 
-
-      var force_collide = d3.forceCollide(function(d) {
+      this.force_collide = d3.forceCollide(function(d) {
         return _this.radius_scale(d.value.volume) + 1;
       })
 
-      sim
-      .force("x", forceX_combine)
-      .force("y", forceY)
-      .force("collide", force_collide)
+      this.forceX_separate = d3.forceX(function(d) {
+          // if(d.value.building_id==0){
+          //   return (1000/2)-(500/3);
+          // }
+          // if(d.value.building_id==1){
+          //   return _this.width/2;
+          // }
+          // if(d.value.building_id==2){
+          //   console.log(d);
+          //   return (_this.width/2)+(_this.width/3);
+          // }
+        }).strength(0.05)
 
-      sim.nodes(nestedData)
+      this.forceX_combine = d3.forceX(function(d) {
+          return _this.width/2;
+        }).strength(0.05)
+
+      this.forceY = d3.forceY(function(d) {
+         return _this.height/2;
+       }).strength(0.05)
+
+      this.forceX_separate_rooms = d3.forceX(function(d) {
+        if(d.value.apartment_size==1){
+          return 20;
+        }
+        if(d.value.apartment_size==2){
+          return (_this.width/2)-(_this.width/6);
+        }
+        if(d.value.apartment_size==3){
+          return (_this.width/2)+(_this.width/6);
+        }
+        if(d.value.apartment_size==4){
+          return _this.width-20;
+        }
+
+        // if(d.value.apartment_size==1){
+        //   return (WIDTH/2)-(WIDTH/3);
+        // }
+        // if(d.value.apartment_size==2){
+        //   return (WIDTH/2)+(WIDTH/3);
+        // }
+        // if(d.value.apartment_size==3){
+        //   return (WIDTH/2)-(WIDTH/3);
+        // }
+        // if(d.value.apartment_size==4){
+        //   return (WIDTH/2)+(WIDTH/3);
+        // }
+        }).strength(0.05)
+
+      this.forceY_separate_rooms = d3.forceY(function(d) {
+          // if(d.value.apartment_size==1){
+          //   return (HEIGHT/2)-(HEIGHT/4);
+          // }
+          // if(d.value.apartment_size==2){
+          //   return (HEIGHT/2)-(HEIGHT/4);
+          // }
+          // if(d.value.apartment_size==3){
+          //   return (HEIGHT/2)+(HEIGHT/4);
+          // }
+          // if(d.value.apartment_size==4){
+          //   return (HEIGHT/2)+(HEIGHT/4);
+          // }
+        }).strength(0.05)
+
+      this.sim
+      .force("x", this.forceX_combine)
+      .force("y", this.forceY)
+      .force("collide", this.force_collide)
+
+      this.sim.nodes(nestedData)
       .on('tick', tick)
 
 
@@ -284,7 +369,7 @@ export default class BubbleChart extends Component {
       .on("end", dragended))
 
       function dragstarted(d){
-        if (!d3.event.active) sim.alphaTarget(0.003).restart();
+        if (!d3.event.active) _this.sim.alphaTarget(0.003).restart();
         d.fx = d.x;
         d.fy = d.y;
       }
@@ -295,7 +380,7 @@ export default class BubbleChart extends Component {
       }
 
       function dragended(d){
-        if (!d3.event.active) sim.alphaTarget(0).restart();
+        if (!d3.event.active) _this.sim.alphaTarget(0).restart();
         d.fx = null;
         d.fy = null;
 
@@ -303,69 +388,22 @@ export default class BubbleChart extends Component {
 
     }
 
-    var forceX_separate = d3.forceX(function(d) {
-        if(d.value.building_id==0){
-          return (_this.width/2)-(_this.width/3);
-        }
-        if(d.value.building_id==1){
-          return _this.width/2;
-        }
-        if(d.value.building_id==2){
-          console.log(d);
-          return (_this.width/2)+(_this.width/3);
-        }
-      }).strength(0.05)
+      this.wait_buildings = true;
 
-    var forceX_combine = d3.forceX(function(d) {
-        return _this.width/2;
-      }).strength(0.05)
+      this.sim
+        .force("x", this.forceX_combine)
+        .force("y", this.forceY.strength(0.05))
+        .alphaTarget(0.3)
+        .restart()
 
-    var forceY = d3.forceY(function(d) {
-       return _this.height/2;
-      }).strength(0.05)
-
-    var forceX_separate_rooms = d3.forceX(function(d) {
-      if(d.value.apartment_size==1){
-        return 20;
-      }
-      if(d.value.apartment_size==2){
-        return (_this.width/2)-(_this.width/6);
-      }
-      if(d.value.apartment_size==3){
-        return (_this.width/2)+(_this.width/6);
-      }
-      if(d.value.apartment_size==4){
-        return _this.width-20;
-      }
-
-      // if(d.value.apartment_size==1){
-      //   return (WIDTH/2)-(WIDTH/3);
-      // }
-      // if(d.value.apartment_size==2){
-      //   return (WIDTH/2)+(WIDTH/3);
-      // }
-      // if(d.value.apartment_size==3){
-      //   return (WIDTH/2)-(WIDTH/3);
-      // }
-      // if(d.value.apartment_size==4){
-      //   return (WIDTH/2)+(WIDTH/3);
-      // }
-      }).strength(0.05)
-
-    var forceY_separate_rooms = d3.forceY(function(d) {
-        // if(d.value.apartment_size==1){
-        //   return (HEIGHT/2)-(HEIGHT/4);
-        // }
-        // if(d.value.apartment_size==2){
-        //   return (HEIGHT/2)-(HEIGHT/4);
-        // }
-        // if(d.value.apartment_size==3){
-        //   return (HEIGHT/2)+(HEIGHT/4);
-        // }
-        // if(d.value.apartment_size==4){
-        //   return (HEIGHT/2)+(HEIGHT/4);
-        // }
-      }).strength(0.05)
+        setTimeout(function() {
+          if(this.wait_buildings){
+            _this.sim
+              .alphaTarget(0)
+              .restart()
+            }
+         }, 3000);
+           this.wait_buildings = false;
 
   }
 
@@ -404,14 +442,228 @@ export default class BubbleChart extends Component {
 
 //}
 
+filter_rooms = e => {
+  var _this = this;
+  var labelsvg = d3.select("#chart").select("#labels")
+  this.wait_apartments = true;
+
+  labelsvg
+    .selectAll("text")
+    .remove()
+
+  labelsvg
+    .append("text").text("Apertments sorted per number of rooms").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+
+  labelsvg
+    .append("text").text("1").attr("y", 50).attr("x", 20)
+
+  labelsvg
+    .append("text").text("2").attr("y", 50).attr("x", (this.width/2)-(this.width/6))
+
+  labelsvg
+    .append("text").text("3").attr("y", 50).attr("x", (this.width/2)+(this.width/6))
+
+  labelsvg
+    .append("text").text("4").attr("y", 50).attr("x", this.width-20)
+
+    this.wait_apartments = true;
+
+  this.sim
+    .force("x", this.forceX_separate_rooms.strength(0.1))
+    .force("y", this.forceY.strength(0.01))
+    .alphaTarget(0.4)
+    .restart()
+
+    setTimeout(function() {
+      //var {wait_apartments} = _this.state;
+      if(_this.wait_apartments){
+        _this.sim
+          .alphaTarget(0)
+          .restart()
+        }
+     }, 3000);
+     this.wait_apartments = false;
+}
+sort_volume = e => {
+  //const {sim, sort_scale, min, max, width}=this.state;
+  var _this = this;
+
+  this.wait_volume = true;
+
+  //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: true, wait_hot: false, wait_cold: false});
+
+  var labelsvg = d3.select("#chart").select("#labels")
+
+  labelsvg
+    .selectAll("text")
+    .remove()
+
+  labelsvg
+    .append("text").text("Descending sorted water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+
+  labelsvg
+    .append("text").text(Math.round(this.max * 100) / 100).attr("y", 50).attr("x", 0)
+
+  labelsvg
+    .append("text").text(Math.round(this.min * 100) / 100).attr("y", 50).attr("x", this.width-100)
+
+  this.sim
+    .force("x", d3.forceX(function(d) {
+      return _this.sort_scale(d.value.volume);
+    }).strength(0.1))
+    .force("y", this.forceY.strength(0.01))
+    .alphaTarget(0.5)
+    .restart()
+
+    setTimeout(function() {
+      //var {wait_volume} = _this.state;
+      if(_this.wait_volume){
+        _this.sim
+          .alphaTarget(0)
+          .restart()
+        }
+     }, 3000);
+     this.wait_volume = false;
+}
+sort_volume_hot = e => {
+  //const {sim, sort_hot_scale, min_hot, max_hot, width}=this.state;
+  var _this = this;
+
+
+  this.wait_hot = true;
+  //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: false, wait_hot: true, wait_cold: false});
+
+  var labelsvg = d3.select("#chart").select("#labels")
+
+  labelsvg
+    .selectAll("text")
+    .remove()
+
+  labelsvg
+    .append("text").text("Descending sorted hot water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+
+  labelsvg
+    .append("text").text(Math.round(this.max_hot * 100) / 100).attr("y", 50).attr("x", 0)
+
+  labelsvg
+    .append("text").text(Math.round(this.min_hot * 100) / 100).attr("y", 50).attr("x", this.width-100)
+
+  this.sim
+    .force("x", d3.forceX(function(d) {
+      return _this.sort_hot_scale(d.value.hot);
+    }).strength(0.1))
+    .force("y", this.forceY.strength(0.01))
+    .alphaTarget(0.5)
+    .restart()
+
+    setTimeout(function() {
+      //var {wait_hot} = _this.state;
+      if(_this.wait_hot){
+        _this.sim
+          .alphaTarget(0)
+          .restart()
+        }
+     }, 3000);
+     this.wait_hot = false;
+}
+
+sort_volume_cold = e => {
+  //const {sim, sort_cold_scale, min_cold, max_cold, width}=this.state;
+  var _this = this;
+
+  this.wait_cold = true;
+
+  //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: false, wait_hot: false, wait_cold: true});
+
+  var labelsvg = d3.select("#chart").select("#labels")
+
+  labelsvg
+    .selectAll("text")
+    .remove()
+
+  labelsvg
+    .append("text").text("Descending sorted cold water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+
+  labelsvg
+    .append("text").text(Math.round(this.max_cold * 100) / 100).attr("y", 50).attr("x", 0)
+
+  labelsvg
+    .append("text").text(Math.round(this.min_cold * 100) / 100).attr("y", 50).attr("x", this.width-100)
+
+  this.sim
+    .force("x", d3.forceX(function(d) {
+      return _this.sort_cold_scale(d.value.cold);
+    }).strength(0.1))
+    .force("y", this.forceY.strength(0.01))
+    .alphaTarget(0.5)
+    .restart()
+
+    setTimeout(function() {
+      //var {wait_cold} = _this.state;
+      if(_this.wait_cold){
+        _this.sim
+          .alphaTarget(0)
+          .restart()
+        }
+     }, 3000);
+       this.wait_cold = false;
+}
+combine = e => {
+
+  //const {sim}=this.state;
+  var _this = this;
+  this.wait_combine = true;
+
+  var labelsvg = d3.select("#chart").select("#labels")
+
+  labelsvg
+    .selectAll("text")
+    .remove()
+
+
+  //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: true, wait_volume: false, wait_hot: false, wait_cold: false});
+  this.sim
+    .force("x", this.forceX_combine)
+    .force("y", this.forceY.strength(0.05))
+    .alphaTarget(0.3)
+    .restart()
+
+    setTimeout(function() {
+      //var {wait_combine} = _this.state;
+      if(_this.wait_combine){
+        _this.sim
+          .alphaTarget(0)
+          .restart()
+        }
+     }, 300);
+
+     this.wait_combine = false;
+
+}
+
+
+
+
 
 
 render(){
+  // <button id="combine" onClick={this.combine}>combine</button>
+  // <button id="sort_volume" onClick={this.sort_volume}>Sort water volume</button>
+  // <button id="sort_hot" onClick={this.sort_volume_hot}>Sort hot water volume</button>
+  // <button id="sort_cold" onClick={this.sort_volume_cold}>Sort cold water volume</button>
   return(
     <div className="container-fluid">
-    <div id="chart">
     <p>Bubblechart</p>
+    <div id="bubbleButtons">
+      <button id="combine" onClick={this.combine}>Reset</button>
+
+      <button id="rooms" onClick={this.filter_rooms}>Filter per rooms</button>
+      <button id="sort_volume" onClick={this.sort_volume}>Sort water volume</button>
+      <button id="sort_hot" onClick={this.sort_volume_hot}>Sort hot water volume</button>
+      <button id="sort_cold" onClick={this.sort_volume_cold}>Sort cold water volume</button>
+
     </div>
+    <div id="chart"></div>
     </div>
   )
 }
