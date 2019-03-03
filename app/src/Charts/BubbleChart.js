@@ -119,17 +119,17 @@ export default class BubbleChart extends Component {
         console.log(filteredDate)
 
         //Find apartment with highest and lowest water consumption
-        // this.max = 0;
-        // this.min = 20000;
-        // this.max_hot = 0;
-        // this.min_hot = 20000;
-        // this.max_cold = 0;
-        // this.min_cold = 20000;
+        this.max = 0;
+        this.min = 20000;
+        this.max_hot = 0;
+        this.min_hot = 20000;
+        this.max_cold = 0;
+        this.min_cold = 20000;
 
         // this.max_apartment;
         // this.min_apartment;
 
-
+        console.log("max är!")
         console.log(this.max)
         var _this = this;
         nestedData.forEach(function(d) {
@@ -217,7 +217,7 @@ export default class BubbleChart extends Component {
       }
       else{
         var labels = d3.select("#chart")
-        .append("g")
+        .append("svg")
         .attr("id", "labels")
         .attr("height", 60)
         .attr("width", this.width)
@@ -382,22 +382,22 @@ export default class BubbleChart extends Component {
 
     }
 
-      this.wait_buildings = true;
+      // this.wait_buildings = true;
 
-      this.sim
-        .force("x", this.forceX_combine)
-        .force("y", this.forceY.strength(0.05))
-        .alphaTarget(0.3)
-        .restart()
+      // this.sim
+      //   .force("x", this.forceX_combine)
+      //   .force("y", this.forceY.strength(0.05))
+      //   .alphaTarget(0.3)
+      //   .restart()
 
-        setTimeout(function() {
-          if(this.wait_buildings){
-            _this.sim
-              .alphaTarget(0)
-              .restart()
-            }
-         }, 3000);
-           this.wait_buildings = false;
+      //   setTimeout(function() {
+      //     if(this.wait_buildings){
+      //       _this.sim
+      //         .alphaTarget(0)
+      //         .restart()
+      //       }
+      //    }, 3000);
+      //      this.wait_buildings = false;
 
   }
 
@@ -438,8 +438,14 @@ export default class BubbleChart extends Component {
 
 filter_rooms = e => {
   var _this = this;
+
+  this.wait_apartments=true;
+  this.wait_combine = false;
+  this.wait_volume=false;
+  this.wait_hot=false;
+  this.wait_cold=false;
+
   var labelsvg = d3.select("#chart").select("#labels")
-  this.wait_apartments = true;
 
   labelsvg
     .selectAll("text")
@@ -476,13 +482,17 @@ filter_rooms = e => {
           .restart()
         }
      }, 3000);
-     this.wait_apartments = false;
+     //this.wait_apartments = false;
 }
 sort_volume = e => {
   //const {sim, sort_scale, min, max, width}=this.state;
   var _this = this;
 
-  this.wait_volume = true;
+  this.wait_apartments=false;
+  this.wait_combine = false;
+  this.wait_volume=true;
+  this.wait_hot=false;
+  this.wait_cold=false;
 
   //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: true, wait_hot: false, wait_cold: false});
 
@@ -517,14 +527,19 @@ sort_volume = e => {
           .restart()
         }
      }, 3000);
-     this.wait_volume = false;
+     //this.wait_volume = false;
 }
 sort_volume_hot = e => {
   //const {sim, sort_hot_scale, min_hot, max_hot, width}=this.state;
+
   var _this = this;
 
+  this.wait_apartments=false;
+  this.wait_combine = false;
+  this.wait_volume=false;
+  this.wait_hot=true;
+  this.wait_cold=false;
 
-  this.wait_hot = true;
   //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: false, wait_hot: true, wait_cold: false});
 
   var labelsvg = d3.select("#chart").select("#labels")
@@ -558,14 +573,18 @@ sort_volume_hot = e => {
           .restart()
         }
      }, 3000);
-     this.wait_hot = false;
+     //this.wait_hot = false;
 }
 
 sort_volume_cold = e => {
   //const {sim, sort_cold_scale, min_cold, max_cold, width}=this.state;
   var _this = this;
 
-  this.wait_cold = true;
+  this.wait_apartments=false;
+  this.wait_combine = false;
+  this.wait_volume=false;
+  this.wait_hot=false;
+  this.wait_cold=true;
 
   //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: false, wait_hot: false, wait_cold: true});
 
@@ -600,13 +619,17 @@ sort_volume_cold = e => {
           .restart()
         }
      }, 3000);
-       this.wait_cold = false;
+       //this.wait_cold = false;
 }
 combine = e => {
 
   //const {sim}=this.state;
   var _this = this;
+  this.wait_apartments=false;
   this.wait_combine = true;
+  this.wait_volume=false;
+  this.wait_hot=false;
+  this.wait_cold=false;
 
   var labelsvg = d3.select("#chart").select("#labels")
 
@@ -623,15 +646,17 @@ combine = e => {
     .restart()
 
     setTimeout(function() {
+      console.log("timeout");
       //var {wait_combine} = _this.state;
       if(_this.wait_combine){
+        console.log("wait_combine=true");
         _this.sim
           .alphaTarget(0)
           .restart()
         }
      }, 300);
 
-     this.wait_combine = false;
+     //this.wait_combine = false;
 
 }
 
