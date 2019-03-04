@@ -199,7 +199,7 @@ export default class App extends Component {
               <h5 className="info-heading">This month</h5>
 
               <div className="consumption-stats">
-                <h4 className="consumption-heading">{ volume.toLocaleString() } Litres</h4>
+                <h4 className="consumption-heading">{ volume.toLocaleString() } Liters</h4>
                 <h4 className="percentage-heading" data-positive={ !!(percentage >= 0) }>{ percentageString } %</h4>
               </div>
             </div>
@@ -217,7 +217,7 @@ export default class App extends Component {
         <h3>{ address}</h3>
 
         <div className="list-item-stats">
-          <h4 className="consumption-heading">{ volume.toLocaleString() } <span className="unit">Litres</span></h4>
+          <h4 className="consumption-heading">{ volume.toLocaleString() } <span className="unit">Liters</span></h4>
         </div>
       </li>
     )
@@ -231,7 +231,7 @@ export default class App extends Component {
         <h3>Apartment { number}</h3>
 
         <div className="list-item-stats">
-          <h4 className="consumption-heading">{ volume.toLocaleString() } <span className="unit">Litres</span></h4>
+          <h4 className="consumption-heading">{ volume.toLocaleString() } <span className="unit">Liters</span></h4>
         </div>
       </li>
     )

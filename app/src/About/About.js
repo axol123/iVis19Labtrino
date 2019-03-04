@@ -29,7 +29,7 @@ export default class About extends Component {
 				>
 					<div className="modal-content">
 						<div className="modal-header">
-							<h4 className="modal-title pt-1" id="modal-title">
+							<h4 className="modal-title pt-2 ml-3" id="modal-title">
 								About
 							</h4>
 							<button
@@ -46,13 +46,13 @@ export default class About extends Component {
 								<p className="text-left pt-2">
 									This is a group project in the course DH2321 Infomation
 									Visualization from the Royal Institute of Technology (KTH) in
-									Stockholm, Sweden. The project is a collaboration with startup company <a href="http://www.labtrino.com/">Labrino AB</a>, 
+									Stockholm, Sweden. The project is a collaboration with startup company <a href="http://www.labtrino.com/">Labtrino AB</a>, 
                                     a company which develops intelligent water meter systems for residental property owners. 
                                     This web application is supposed to help property managers in their daily work by providing them a set of visualizations to gain insights about water consumption.
-                                    <img src={Labtrino} alt="Labtrino Logo" className="img-fluid col-lg-4 col-6 p-4 mx-auto d-block" />
+                                    <img src={Labtrino} alt="Labtrino Logo" className="img-fluid col-lg-4 col-6 p-4 mt-2 mx-auto d-block" />
 								</p>
-								<h3 className="pb-4" id="team-title">Meet our Team</h3>
-								<p className="text-left">
+								<h3 className="pb-4 mt-4" id="team-title">Meet our Team</h3>
+								<p className="text-left mb-2">
 									We are 6 students from a variety of
 									master programs, within the fields of Visualization,
 									Interaction Design, Computer Science and Machine Learning.
