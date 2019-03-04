@@ -22,17 +22,18 @@ class App extends Component {
 			loading: true,
 			selectedBuilding: null,
 			selectedApartment: null,
+			selectedApartmentNumber: null,
 		};
 	}
 
 	mapViewOnLoad = () => this.setState({ loading: false })
 
 	setSelectedBuilding = id => {
-		this.setState({ selectedBuilding: id, selectedApartment : null }, window.scrollTo(0, 0));
+		this.setState({ selectedBuilding: id, selectedApartment : null, selectedApartmentNumber : null }, window.scrollTo(0, 0));
 	}
 
-	setSelectedApartment = id => {
-		this.setState({ selectedApartment: id }, window.scrollTo(0, 0));
+	setSelectedApartment = (id, number) => {
+		this.setState({ selectedApartment: id, selectedApartmentNumber : number });
 	}
 
 	render() {
@@ -41,7 +42,13 @@ class App extends Component {
 
 
 		//Some charts crash if building has not been selected
-		let detailView = selectedBuilding ? <DetailView buildingid={this.state.selectedBuilding} apartmentid={this.state.selectedApartment} /> : null;
+		let detailView = selectedBuilding ?
+			<DetailView
+				buildingid={this.state.selectedBuilding}
+				apartmentid={this.state.selectedApartment}
+				apartmentNumber={this.state.selectedApartmentNumber}
+				removeSelectedApartment={ () => this.setSelectedApartment(null, null) } />
+		: null;
 
 		// Loader animation
 		var loader = (

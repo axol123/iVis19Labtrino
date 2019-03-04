@@ -17,6 +17,7 @@
 	padding: 4em 0;
 	display: flex;
 	align-items: flex-end;
+	position: relative;
 }
 
 #detail-view  .detail-view-header h1 {
@@ -36,6 +37,44 @@
 	display: flex;
     align-items: center;
 }
+
+#detail-view  .detail-view-header .selected-apartment-container {
+    position: absolute;
+    top: 0;
+    right: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 16rem;
+
+
+	background: #2c3755;
+    padding: 1rem 1.5rem;
+    border-radius: 0 0 1rem 1rem;
+}
+
+#detail-view  .detail-view-header .selected-apartment-container h4 {
+	color: #fff;
+}
+
+#detail-view  .detail-view-header .selected-apartment-container button {
+	padding: 0;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 4px;
+	background: #FDCB6E;
+	
+	border: none;
+	outline: none;
+}
+
+#detail-view  .detail-view-header .selected-apartment-container button svg {
+	width: 0.5rem;
+	height: 0.5rem;
+}
+
 
 #detail-view .detail-view-header input {
   display: block;

@@ -21,6 +21,30 @@ const arrow_right = (
   </svg>
 )
 
+const close_icon = (
+  <svg viewBox="0 0 34 34">
+      <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+          <g id="Details" transform="translate(-1149.000000, -498.000000)" fill="#000000" fillRule="nonzero">
+              <g id="Content">
+                  <g id="Header" transform="translate(0.000000, 436.000000)">
+                      <g id="filter" transform="translate(1144.000000, 0.000000)">
+                          <g id="header">
+                              <g transform="translate(5.000000, 16.000000)" id="button">
+                                  <g>
+                                      <g id="close" transform="translate(0.000000, 46.000000)">
+                                          <path d="M21.243,17 L33.122,5.121 C33.664,4.579 34,3.828 34,3 C34,1.343 32.657,0 31,0 C30.172,0 29.422,0.336 28.879,0.879 L17,12.757 L5.121,0.879 C4.578,0.336 3.828,0 3,0 C1.343,0 0,1.343 0,3 C0,3.828 0.336,4.578 0.879,5.121 L12.757,17 L0.879,28.879 C0.336,29.422 0,30.172 0,31 C0,32.657 1.343,34 3,34 C3.828,34 4.578,33.664 5.121,33.121 L17,21.243 L28.879,33.122 C29.422,33.664 30.172,34 31,34 C32.657,34 34,32.657 34,31 C34,30.172 33.664,29.422 33.121,28.879 L21.243,17 Z" id="Path"></path>
+                                      </g>
+                                  </g>
+                              </g>
+                          </g>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </g>
+  </svg>
+)
+
 class DetailView extends Component {
   constructor() {
     super();
@@ -152,6 +176,19 @@ class DetailView extends Component {
 
 
   render(){
+    const { apartmentNumber, removeSelectedApartment } = this.props;
+
+    let apartmentSelection = null;
+    if (apartmentNumber) {
+      apartmentSelection = (
+        <div className="selected-apartment-container">
+          <h4>Apartment {apartmentNumber} selected</h4>
+
+          <button onClick={ removeSelectedApartment }>{ close_icon }</button>
+        </div>
+      )
+    } 
+
     return(
       <div id="detail-view" data-apartment-selected={ !!this.props.apartmentid }>
         <div className="bg-white detail-view-header-container">
@@ -175,6 +212,8 @@ class DetailView extends Component {
                 value={this.state.stopDate}
                 onChange={this.updateDates}/>
             </div>
+
+            { apartmentSelection }
           </div>
         </div>
 
