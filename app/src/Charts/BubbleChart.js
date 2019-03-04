@@ -404,20 +404,20 @@ export default class BubbleChart extends Component {
       .selectAll("text")
       .remove()
 
-    labelsvg
-      .append("text").text("Apertments sorted per number of rooms").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+    // labelsvg
+    //   .append("text").text("Apertments sorted per number of rooms").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
     labelsvg
-      .append("text").text("1").attr("y", 50).attr("x", 20)
+      .append("text").text("1 room").attr("y", 50).attr("x", 20)
 
     labelsvg
-      .append("text").text("2").attr("y", 50).attr("x", (this.width/2)-(this.width/6))
+      .append("text").text("2 rooms").attr("y", 50).attr("x", (this.width/2)-(this.width/6)-30)
 
     labelsvg
-      .append("text").text("3").attr("y", 50).attr("x", (this.width/2)+(this.width/6))
+      .append("text").text("3 rooms").attr("y", 50).attr("x", (this.width/2)+(this.width/6)-30)
 
     labelsvg
-      .append("text").text("4").attr("y", 50).attr("x", this.width-20)
+      .append("text").text("4 rooms").attr("y", 50).attr("x", this.width-80)
 
       this.wait_apartments = true;
 
@@ -456,14 +456,14 @@ export default class BubbleChart extends Component {
       .selectAll("text")
       .remove()
 
-    labelsvg
-      .append("text").text("Descending sorted water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+    // labelsvg
+    //   .append("text").text("Descending sorted water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
     labelsvg
-      .append("text").text(Math.round(this.max)).attr("y", 50).attr("x", 0)
+      .append("text").text(Math.round(this.max)+ " liters").attr("y", 50).attr("x", 0)
 
     labelsvg
-      .append("text").text(Math.round(this.min)).attr("y", 50).attr("x", this.width-100)
+      .append("text").text(Math.round(this.min)+ " liters").attr("y", 50).attr("x", this.width-100)
 
     this.sim
       .force("x", d3.forceX(function(d) {
@@ -503,14 +503,14 @@ export default class BubbleChart extends Component {
       .selectAll("text")
       .remove()
 
-    labelsvg
-      .append("text").text("Descending sorted hot water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+    // labelsvg
+    //   .append("text").text("Descending sorted hot water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
     labelsvg
-      .append("text").text(Math.round(this.max_hot)).attr("y", 50).attr("x", 0)
+      .append("text").text(Math.round(this.max_hot)+ " liters").attr("y", 50).attr("x", 0)
 
     labelsvg
-      .append("text").text(Math.round(this.min_hot)).attr("y", 50).attr("x", this.width-100)
+      .append("text").text(Math.round(this.min_hot)+ " liters").attr("y", 50).attr("x", this.width-100)
 
     this.sim
       .force("x", d3.forceX(function(d) {
@@ -549,14 +549,14 @@ export default class BubbleChart extends Component {
       .selectAll("text")
       .remove()
 
-    labelsvg
-      .append("text").text("Descending sorted cold water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
+    // labelsvg
+    //   .append("text").text("Descending sorted cold water volume").attr("y", 20).attr("x", this.width/2).style("text-anchor", "middle")
 
     labelsvg
-      .append("text").text(Math.round(this.max_cold)).attr("y", 50).attr("x", 0)
+      .append("text").text(Math.round(this.max_cold)+ " liters").attr("y", 50).attr("x", 0)
 
     labelsvg
-      .append("text").text(Math.round(this.min_cold)).attr("y", 50).attr("x", this.width-100)
+      .append("text").text(Math.round(this.min_cold)+ " liters").attr("y", 50).attr("x", this.width-100)
 
     this.sim
       .force("x", d3.forceX(function(d) {
@@ -626,7 +626,7 @@ export default class BubbleChart extends Component {
 
         <div className="label-container" ref={ element => this.$labelContainer = element }>
         </div>
-        
+
         <div className="chart-container" ref={ element => this.$chartContainer = element }>
         </div>
 
