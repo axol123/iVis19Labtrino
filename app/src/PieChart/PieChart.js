@@ -86,7 +86,7 @@ export default class PieChart extends Component {
       //////////////////////////////////////////////
       if(filteredDate.length != 0) {
         var width = 960,
-        height = 500,
+        height = 800,
         margin = 40,
         viewBox="0 0 960 500",
         perserveAspectRatio="xMinYMid"
@@ -103,7 +103,7 @@ export default class PieChart extends Component {
 
         var arc = d3.arc()
         .outerRadius(radius)
-        .innerRadius(110);
+        .innerRadius(200);
 
         var pie = d3.pie();
 
@@ -118,7 +118,7 @@ export default class PieChart extends Component {
         // Text in the center of the pie chart
         svg.append("text")
         .attr("text-anchor", "middle")
-        .attr('font-size', '16pt')
+        .attr('font-size', '32pt')
         //.attr('y', 20)
         .text(total + " liters");
 
