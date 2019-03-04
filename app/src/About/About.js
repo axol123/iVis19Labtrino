@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./About.css";
 
 // Profile pics
 import Lucas from "../assets/lucas.jpg";
@@ -28,7 +29,7 @@ export default class About extends Component {
 				>
 					<div className="modal-content">
 						<div className="modal-header">
-							<h4 className="modal-title" id="exampleModalLongTitle">
+							<h4 className="modal-title pt-1" id="modal-title">
 								About
 							</h4>
 							<button
@@ -50,7 +51,7 @@ export default class About extends Component {
                                     This web application is supposed to help property managers in their daily work by providing them a set of visualizations to gain insights about water consumption.
                                     <img src={Labtrino} alt="Labtrino Logo" className="img-fluid col-lg-4 col-6 p-4 mx-auto d-block" />
 								</p>
-								<h3 className="pb-2">Meet our Team</h3>
+								<h3 className="pb-4" id="team-title">Meet our Team</h3>
 								<p className="text-left">
 									We are 6 students from a variety of
 									master programs, within the fields of Visualization,
