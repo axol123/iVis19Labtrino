@@ -157,9 +157,9 @@ export default class BubbleChart extends Component {
         });
         this.width = Number(d3.select(this.$chartContainer).style("width").slice(0, -2));
         this.radius_scale = d3.scaleSqrt().domain([this.min, this.max]).range([4, 30]);
-        this.sort_scale = d3.scaleSqrt().domain([this.min, this.max]).range([this.width, 0]);
-        this.sort_hot_scale = d3.scaleSqrt().domain([this.min_hot, this.max_hot]).range([this.width, 0]);
-        this.sort_cold_scale = d3.scaleSqrt().domain([this.min_cold, this.max_cold]).range([this.width, 0]);
+        this.sort_scale = d3.scaleLinear().domain([this.min, this.max]).range([this.width, 0]);
+        this.sort_hot_scale = d3.scaleLinear().domain([this.min_hot, this.max_hot]).range([this.width, 0]);
+        this.sort_cold_scale = d3.scaleLinear().domain([this.min_cold, this.max_cold]).range([this.width, 0]);
       }
 
       if(apartmentId != null) {
