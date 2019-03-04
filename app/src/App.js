@@ -28,7 +28,7 @@ class App extends Component {
 	mapViewOnLoad = () => this.setState({ loading: false })
 
 	setSelectedBuilding = id => {
-		this.setState({ selectedBuilding: id }, window.scrollTo(0, 0));
+		this.setState({ selectedBuilding: id, selectedApartment : null }, window.scrollTo(0, 0));
 	}
 
 	setSelectedApartment = id => {
