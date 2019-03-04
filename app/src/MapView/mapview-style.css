@@ -343,6 +343,7 @@
 	flex-wrap: wrap;
 	padding: 1rem 1.5rem;
     background: #1E2846;
+    justify-content: center;
 }
 
 
@@ -356,15 +357,25 @@
 	justify-content: center;
 	align-items: center;
 	
-	width: 2rem;
-	height: 2rem;
+	width: 1.7rem;
+	height: 1.7rem;
 	border-radius: 4px;
 
 	cursor: pointer;
+	transition: opacity 120ms ease;
+}
+
+#map-view .map-detailed .apartment-list-item[data-selected="false"] {
+	opacity: 0.5;
+}
+
+#map-view .map-detailed .apartment-list-item[data-selected="true"] {
+	opacity: 1;
 }
 
 #map-view .map-detailed .apartment-list-item h3 {
 	color: #2E3859;
+	font-size: 0.75rem;
 }
 
 

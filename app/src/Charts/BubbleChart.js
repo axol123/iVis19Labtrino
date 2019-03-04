@@ -623,7 +623,7 @@ export default class BubbleChart extends Component {
     return (
       <div id="bubble-chart">
         <header>
-          <h2>Consumption Breakdown</h2>
+          <h2>Consumption Distribution</h2>
 
           <BubbleButtons combine={this.combine} filterRooms={this.filter_rooms} sortVolume={this.sort_volume} sortVolumeHot={this.sort_volume_hot} sortVolumeCold={this.sort_volume_cold} />
         </header>
