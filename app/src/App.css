@@ -1,12 +1,116 @@
 .App {
+  position: relative;
+
   text-align: center;
+  background-color: #E8E8E8;
   min-height: 100vh;
+
+  font-family: 'Montserrat', sans-serif;
+
+  overflow: hidden;
+}
+
+.App[data-building-selected="true"] {
+  overflow: initial;
+}
+
+
+.App h1,
+.App h2,
+.App h3,
+.App h4,
+.App h5,
+.App p {
+  margin: 0;
+}
+
+.App h1 {
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+  font-weight: 600;
+
+  letter-spacing: 0.75px;
+}
+
+.App h2 {
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+
+  letter-spacing: 0.75px;
+}
+
+.App h3 {
+  font-size: 0.875rem;
+  line-height: 1rem;
+  font-weight: 500;
+
+  letter-spacing: 0.5px;
+}
+
+.App h4 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+
+  letter-spacing: 0.25px;
+}
+
+.App h5 {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.App h5 {
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  line-height: 1rem;
+}
+
+.App ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: #fff;
+
+  transition: opacity 250ms ease;
+}
+
+.loader-container[data-loading="true"] {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.loader-container[data-loading="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.top-section-container {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+
+.App[data-building-selected="true"] .top-section-container {
+  min-height: initial;
 }
 
 .text {
   text-align: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #505050;
 }
 
 .bg-white{

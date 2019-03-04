@@ -1,0 +1,65 @@
+#detail-view {
+	position: relative;
+	text-align: left;
+}
+
+#detail-view .chart-shadow {
+	background: #FFFFFF;
+	box-shadow: 0 10px 30px 0 rgba(0,0,0,0.04);
+	border-radius: 6px;
+}
+
+#detail-view  .detail-view-header-container {
+	box-shadow: 0 10px 30px 0 rgba(0,0,0,0.04);
+}
+
+#detail-view  .detail-view-header {
+	padding: 4em 0;
+	display: flex;
+	align-items: flex-end;
+}
+
+#detail-view  .detail-view-header h1 {
+	margin-right: 1.5rem;
+}
+
+#detail-view h1,
+#detail-view h2 {
+	color: #2E3859;
+}
+
+#detail-view  .detail-view-header .date {
+	display: flex;
+}
+
+#detail-view .detail-view-header .dates {
+	display: flex;
+    align-items: center;
+}
+
+#detail-view .detail-view-header input {
+  display: block;
+  border: none;
+
+	padding: 0.5rem 1rem;
+	background: #2D3755;
+
+  color: #FFF;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  outline: none;
+	border-radius: 1rem;
+}
+
+#detail-view .detail-view-header .arrow-right {
+	margin: 0 1.5rem;
+	height: 0.75rem;
+}
+
+#map-view .map-clickable .building .pop-up-stats {
+	padding: 0.5rem 1rem;
+}
+
+#map-view .map-clickable .building .info-heading {
+}

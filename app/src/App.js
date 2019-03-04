@@ -17,23 +17,35 @@ import NavBar from "./NavBar/NavBar";
 class App extends Component {
 	constructor() {
 		super();
+
 		this.state = {
-			loading: true
+			loading: true,
+			selectedBuilding: null,
+			selectedApartment: null,
 		};
 	}
 
-	componentDidMount() {
-		// Time for loader animation
-		setTimeout(() => this.setState({ loading: false }), 2000);
+	mapViewOnLoad = () => this.setState({ loading: false })
+
+	setSelectedBuilding = id => {
+		this.setState({ selectedBuilding: id }, window.scrollTo(0, 0));
+	}
+
+	setSelectedApartment = id => {
+		this.setState({ selectedApartment: id }, window.scrollTo(0, 0));
 	}
 
 	render() {
 		// Loading status
-		const { loading } = this.state;
+		const { loading, selectedBuilding } = this.state;
+
+
+		//Some charts crash if building has not been selected
+		let detailView = selectedBuilding ? <DetailView buildingid={this.state.selectedBuilding} apartmentid={this.state.selectedApartment} /> : null;
 
 		// Loader animation
 		var loader = (
-			<div className="container-fluid h-100">
+			<div className="loader-container container-fluid h-100" data-loading={ loading }>
 				<div className="row h-100 justify-content-center  d-flex align-items-center">
 					<div className="sk-cube-grid">
 						<div className="sk-cube sk-cube1" />
@@ -53,22 +65,24 @@ class App extends Component {
 		// App content
 		var app = (
 			<Fade>
-				<NavBar />
-
-				<div className="container-fluid full-height bg-light p-0">
-					<MapView />
-					<DetailView />
+				<div className="top-section-container">
+					<NavBar />
+					<MapView setSelectedBuilding={ this.setSelectedBuilding } setSelectedApartment={ this.setSelectedApartment } onLoad={ this.mapViewOnLoad } />
 				</div>
+
+				<div className="container-fluid bg-light p-0">{ detailView }</div>
 			</Fade>
 		);
 
 		// Change to app when loading is done
-		var content = loading ? loader : app;
 
 		return (
-			<div className="App bg-light">
+			<div className="App bg-light" data-building-selected={ !!this.state.selectedBuilding }>
+		        { loader }
+
 				<About />
-				{content}
+
+				{ app }
 			</div>
 		);
 	}

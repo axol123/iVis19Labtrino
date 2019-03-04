@@ -6,16 +6,13 @@ class NavBar extends Component {
 	render() {
 		return (
 			<nav className="navbar navbar-light bg-light justify-content-between">
-				<div className="navbar-brand">
-					<img src={logo} height="50" alt="Labtrino" />
+				<div className="container">
+					<div className="navbar-brand">
+						<img src={logo} height="50" alt="Labtrino" />
+					</div>
+					
+					<p className="about-link m-0 font-weight-bold" data-toggle="modal" data-target="#aboutModal">About</p>
 				</div>
-				<p
-					className="about-link m-0 font-weight-bold"
-					data-toggle="modal"
-					data-target="#aboutModal"
-				>
-					About
-					</p>
 			</nav>
 		);
 	}

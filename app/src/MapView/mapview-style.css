@@ -1,59 +1,19 @@
 #map-view {
+ 	display: flex;
+
   position: relative;
   overflow: hidden;
 
-  height: 100vh;
+  flex: 1;
+  width: 100%;
   min-height: 28rem;
 
   text-align: left;
-  font-family: 'Montserrat', sans-serif;
-
-	transition: height 360ms ease-in-out;
 }
 
 #map-view[data-apartment-selected="true"] {
   height: 28rem;
-}
-
-#map-view h2,
-#map-view h3,
-#map-view h4,
-#map-view h5,
-#map-view p,
-#map-view span {
-	margin: 0;
-}
-
-#map-view h2 {
-	font-size: 1.125rem;
-	line-height: 1.5rem;
-	font-weight: 700;
-
-	letter-spacing: 0.75px;
-}
-
-#map-view h3 {
-	font-size: 0.875rem;
-	line-height: 1rem;
-	font-weight: 600;
-
-	letter-spacing: 0.5px;
-}
-
-#map-view h4 {
-	font-size: 0.75rem;
-	line-height: 1rem;
-	font-weight: 600;
-
-	letter-spacing: 0.25px;
-}
-
-#map-view h5 {
-	font-size: 0.75rem;
-	line-height: 1rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 1.5px;
+  flex: 0;
 }
 
 #map-view p {
@@ -67,30 +27,12 @@
 	line-height: 1rem;
 }
 
-#map-view h5 {
-	font-size: 0.5rem;
-	text-transform: uppercase;
-	line-height: 1rem;
-}
-
-#map-view ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-}
-
-#map-view .content-container {
-	position: relative;
-	margin: 0 auto;
-
-	max-width: 70rem;
-	padding: 0px 2rem;
-    height: 100%;
-}
-
 #map-view .content-columns {
+	position: relative;
+
 	display: flex;
 	pointer-events: none;
+	flex: 1;
 }
 
 #map-view .content-columns .column.top {
@@ -254,19 +196,11 @@
 #map-view .map-clickable .building[data-selected="false"] {
 	visibility: hidden;
 	pointer-events: none;
-
-	opacity: 0;
-	transform: scale(0);
-	transition: opacity 100ms ease 0ms, transform 100ms ease 0ms, visibility 0ms ease 100ms;
 }
 
 #map-view .map-clickable .building[data-selected="true"] {
 	visibility: visible;
 	pointer-events: all;
-
-	opacity: 1;
-	transform: scale(1);
-	transition: opacity 100ms linear, transform 100ms linear, visibility 0ms linear;
 }
 
 #map-view .map-clickable .building .pin {
@@ -293,9 +227,7 @@
 	white-space: nowrap;
 	box-shadow: 0px 5px 20px 0 rgba(0, 0, 0, 0.24);
 
-	opacity: 0;
 	transform: translateY(-50%);
-	transition: opacity 120ms linear, transform 120ms linear, visibility 0ms linear 120ms;
 }
 
 #map-view .map-clickable .building .pop-up-info {
@@ -340,10 +272,6 @@
 #map-view .map-clickable .building[data-selected="true"] .pop-up,
 #map-view .map-clickable .building:hover .pop-up {
 	visibility: visible;
-
-	opacity: 1;
-	transform: translateY(calc(-50% - 5px));
-	transition: opacity 120ms linear, transform 120ms linear, visibility 120ms linear;
 }
 
 
@@ -365,8 +293,6 @@
 #map-view .map-detailed .map-detailed-list {
 	height: 30rem;
 	overflow: scroll;
-  
-	transition: height 360ms ease-in-out;
 }
 
 #map-view[data-apartment-selected="true"] .map-detailed-list {
