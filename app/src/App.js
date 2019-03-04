@@ -74,7 +74,7 @@ class App extends Component {
 			<Fade>
 				<div className="top-section-container">
 					<NavBar />
-					<MapView setSelectedBuilding={ this.setSelectedBuilding } setSelectedApartment={ this.setSelectedApartment } onLoad={ this.mapViewOnLoad } />
+					<MapView selectedApartment={ this.state.selectedApartment } setSelectedBuilding={ this.setSelectedBuilding } setSelectedApartment={ this.setSelectedApartment } onLoad={ this.mapViewOnLoad } />
 				</div>
 
 				<div className="container-fluid bg-light p-0">{ detailView }</div>

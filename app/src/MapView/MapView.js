@@ -251,10 +251,10 @@ export default class App extends Component {
 
   _renderApartment = (apartment, i) => {
     const { id, number, size } = apartment;
-    const { setSelectedApartment } = this.props;
+    const { selectedApartment, setSelectedApartment } = this.props;
 
     return (
-      <li key={ id } className="detailed-list-item apartment-list-item" data-room-size={ size } onClick= { () => setSelectedApartment(apartment.id, apartment.number) }>
+      <li key={ id } className="detailed-list-item apartment-list-item" data-selected={ (selectedApartment && (selectedApartment == id)) }  data-room-size={ size } onClick= { () => setSelectedApartment(apartment.id, apartment.number) }>
         <h3>{ number }</h3>
       </li>
     )
