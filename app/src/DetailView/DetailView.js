@@ -86,6 +86,7 @@ class DetailView extends Component {
             volume: d3.sum(v,function(d) { return d.volume; }),
             hot: d3.sum(v,function(d) { return d.hot; }),
             cold: d3.sum(v,function(d) { return d.cold; }),
+            apartment_number : v[0].apartment_number,
             //data: v
           };
         })
@@ -116,7 +117,8 @@ class DetailView extends Component {
             hot: d3.sum(v,function(d) { return d.hot; }),
             cold: d3.sum(v,function(d) { return d.cold; }),
             building_id: _this.props.buildingid, //Change this to select building
-            apartment_size: parseInt(v[0].apartment_size)
+            apartment_size: parseInt(v[0].apartment_size),
+            apartment_number : v[0].apartment_number,
           };
         })
         .entries(data)
