@@ -111,6 +111,7 @@ export default class BubbleChart extends Component {
         filteredDate = [];
         nestedData.map(ba => filteredDate.push(ba.value))
 
+        //console.log("Data ")
         console.log(filteredDate)
 
         //Find apartment with highest and lowest water consumption
@@ -159,7 +160,7 @@ export default class BubbleChart extends Component {
 
       if(apartmentId != null) {
         var labels = d3.select(this.$labelContainer)
-        .append("g")
+        .append("svg")
         .attr("id", "labels")
         .attr("height", 60)
         .attr("width", this.width)
