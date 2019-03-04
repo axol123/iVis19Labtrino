@@ -89,6 +89,8 @@ export default class BubbleChart extends Component {
         filterData.map(ba => ba.forEach(function(d){return filteredDate.push(d)}))
 
         console.log("HÄÄÄÄR")
+        console.log("Filtered data är")
+        console.log(filterData)
         //  filteredDate.map(ba => console.log(ba))
 
         var nestedData = d3.nest()
@@ -100,6 +102,7 @@ export default class BubbleChart extends Component {
             cold: d3.sum(v,function(d) { return d.cold; }),
             building_id: buildingId, //Not longer 1, 2 or 3
             apartment_id: v[0].apartment_id,
+            apartment_number: v[0].apartment_number,
             apartment_size: parseInt(v[0].apartment_size)
           };
         })
@@ -112,7 +115,8 @@ export default class BubbleChart extends Component {
         nestedData.map(ba => filteredDate.push(ba.value))
 
         //console.log("Data ")
-        console.log(filteredDate)
+        console.log("nested data är")
+        console.log(nestedData )
 
         //Find apartment with highest and lowest water consumption
         this.max = 0;
@@ -256,8 +260,7 @@ export default class BubbleChart extends Component {
       }
 
       function mouseover(d) {
-        tooltip.text("Apartment: " + d.key 
-          + " Building: id "+ (d.value.building_id) 
+        tooltip.text("Apartment: " + d.value.apartment_number 
           + ", Rooms: "+ d.value.apartment_size 
           + ", Water volume: " + Math.round(d.value.volume)
           +  ", Hot water: " + Math.round(d.value.hot) 
