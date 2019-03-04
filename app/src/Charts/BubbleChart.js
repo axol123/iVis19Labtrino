@@ -624,11 +624,13 @@ export default class BubbleChart extends Component {
           <BubbleButtons combine={this.combine} filterRooms={this.filter_rooms} sortVolume={this.sort_volume} sortVolumeHot={this.sort_volume_hot} sortVolumeCold={this.sort_volume_cold} />
         </header>
 
+        <div className="label-container" ref={ element => this.$labelContainer = element }>
+        </div>
+        
         <div className="chart-container" ref={ element => this.$chartContainer = element }>
         </div>
 
-        <div className="label-container" ref={ element => this.$labelContainer = element }>
-        </div>
+        
       </div>
     )
   }
