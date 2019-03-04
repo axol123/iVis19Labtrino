@@ -284,7 +284,7 @@ export default class LineChartWarmColdWater extends Component {
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(xScale))
-      .style("font-size",15); // Create an axis component with d3.axisBottom
+      .style("font-size",10); // Create an axis component with d3.axisBottom
 
       // Call the y axis in a group tag
       svg
