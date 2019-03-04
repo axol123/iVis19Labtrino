@@ -57,6 +57,7 @@ export default class App extends Component {
     }
 
     this.$map = null;
+    this.$marker = {}
   }
 
   _inBounds = (point, bounds) => {
@@ -132,6 +133,10 @@ export default class App extends Component {
     })
   }
 
+  setMarkerActive(id, value) {
+    d3.select(this.$marker[id]).attr("data-selected", value);
+  }
+
   _goToBuilding = (building, longitude, latitude ) => {
     const { setSelectedBuilding } = this.props;
 
@@ -180,7 +185,7 @@ export default class App extends Component {
     return (
       <Marker key={ id } data-selected={ selected } longitude={ long } latitude={ lat }
         captureDrag={ false } captureDoubleClick={ false }>
-        <div className="building" data-selected={ selected } onClick= { () => this._goToBuilding(building, long, lat) }>
+        <div ref={ element => this.$marker[id] = element } className="building" data-selected={ selected } onClick= { () => this._goToBuilding(building, long, lat) }>
           <div className="pin" style={{ transform: `scale(${ scale })` }}>
           </div>
 
@@ -222,7 +227,7 @@ export default class App extends Component {
     const [ long, lat ] = BUILDING_COORDINATES[id].coordinates;
 
     return (
-      <li key={ id } className="detailed-list-item" onClick= { () => this._goToBuilding(building, long, lat) }>
+      <li key={ id } className="detailed-list-item" onClick= { () => this._goToBuilding(building, long, lat) } onMouseEnter= { () => this.setMarkerActive(id, "true") } onMouseLeave= { () => this.setMarkerActive(id, null) }>
         <h3>{ address }</h3>
         <h4>{ apartments.length } apartments</h4>
       </li>
