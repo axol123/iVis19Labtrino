@@ -15,7 +15,7 @@ const MAPBOX_TOKEN = 'pk.eyJ1IjoicDkxNjQ4NyIsImEiOiJjanNxNXpndHIwMndhNDlzOWF5Y2R
 const back_button = (
   <svg width="10px" height="16px" viewBox="0 0 10 16">
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-          <g id="Details" transform="translate(-275.000000, -70.000000)" fill="#FFFFFF" fill-rule="nonzero">
+          <g id="Details" transform="translate(-275.000000, -70.000000)" fill="#FFFFFF" fillRule="nonzero">
               <g id="Map">
                   <g id="Top-3" transform="translate(260.000000, 0.000000)">
                       <g id="button" transform="translate(0.000000, 58.000000)">
@@ -74,9 +74,9 @@ export default class App extends Component {
         .rollup(v => ({
           id: v[0].building_id,
           address: v[0].building_address,
-          volume: Math.round(d3.sum(v, d => d.volume)).toLocaleString('en-GB')
+          volume: Math.round(d3.sum(v, d => d.volume))
         }))
-        .entries(data)
+        .entries(data).sort((a,b) => (b.value.volume - a.value.volume))
 
 
       const buildings2 = d3.nest()
@@ -88,7 +88,7 @@ export default class App extends Component {
           size : v[0].apartment_size,
           name : v[0].apartment_name,
           number : v[0].apartment_number,
-          volume: Math.round(d3.sum(v, d => d.volume)).toLocaleString('en-GB')
+          volume: Math.round(d3.sum(v, d => d.volume))
         }))
         .entries(data)
 
@@ -96,8 +96,11 @@ export default class App extends Component {
       let apartmentDict = {}
       buildings2.map(apartment => (apartmentDict[apartment.key] = apartment.values))
 
+      const totalVolume = buildings.reduce((acc, current) => (acc + current.value.volume), 0);
+      const avgVolume = buildings ? totalVolume / buildings.length : 0;
 
-      this.setState({ buildings : buildings, apartments : apartmentDict }, onLoad)
+
+      this.setState({ buildings : buildings, apartments : apartmentDict, averageVolume : avgVolume }, onLoad)
     }.bind(this))
   }
 
@@ -160,7 +163,7 @@ export default class App extends Component {
     }
   }
 
-  _renderMarker = (zoom, selectedBuilding, building, i) => {
+  _renderMarker = (zoom, selectedBuilding, building, averageVolume, i) => {
     const { id, address, volume } = building;
     const [ long, lat ] = BUILDING_COORDINATES[id].coordinates;
 
@@ -170,6 +173,9 @@ export default class App extends Component {
 
     const scale = Math.max(Math.min(markerScale(zoom), 3), 1)
     const selected = (selectedBuilding && (building.address == selectedBuilding.address))
+
+    const percentage = Math.round((volume / averageVolume - 1) * 100);
+    const percentageString = (percentage > 0) ? `+${ percentage }` : `${ percentage }`;
 
     return (
       <Marker key={ id } data-selected={ selected } longitude={ long } latitude={ lat }
@@ -187,8 +193,8 @@ export default class App extends Component {
               <h5 className="info-heading">This month</h5>
 
               <div className="consumption-stats">
-                <h4 className="consumption-heading">{ volume } Litres</h4>
-                <h4 className="percentage-heading" data-positive={ 1 }>+22%</h4>
+                <h4 className="consumption-heading">{ volume.toLocaleString() } Litres</h4>
+                <h4 className="percentage-heading" data-positive={ !!(percentage >= 0) }>{ percentageString } %</h4>
               </div>
             </div>
           </div>
@@ -205,7 +211,7 @@ export default class App extends Component {
         <h3>{ address}</h3>
 
         <div className="list-item-stats">
-          <h4 className="consumption-heading">{ volume } <span className="unit">Litres</span></h4>
+          <h4 className="consumption-heading">{ volume.toLocaleString() } <span className="unit">Litres</span></h4>
         </div>
       </li>
     )
@@ -236,7 +242,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { map, bounds, selectedBuilding, buildings, apartments, viewport, settings } = this.state;
+    const { map, bounds, selectedBuilding, buildings, apartments, averageVolume, viewport, settings } = this.state;
     const { zoom } = viewport;
 
 
@@ -247,14 +253,14 @@ export default class App extends Component {
 
 
     let header = "Top consumers"
-    let buildingList = visibleBuildings.map((building, i) => this._renderBuilding(building.value, apartments[building.key], i));
+    let buildingList = visibleBuildings.map((building, i) => this._renderBuilding(building.value, apartments[building.key], averageVolume, i));
     if (selectedBuilding) {
       header = selectedBuilding.address
       buildingList = apartments[selectedBuilding.id].map((apartment, i) => this._renderApartment(apartment.value, i));
     }
 
 
-    const makers = visibleBuildings.map((building, i) => this._renderMarker(zoom, selectedBuilding, building.value, i));
+    const makers = visibleBuildings.map((building, i) => this._renderMarker(zoom, selectedBuilding, building.value, averageVolume, i));
     const topList = visibleBuildings.map((building, i) => this._renderHeaderListItem(building.value, i));
 
 

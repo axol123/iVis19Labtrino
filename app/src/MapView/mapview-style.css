@@ -152,11 +152,11 @@
 	line-height: 0.75rem;
 }
 
-#map-view .map-header-list .header-list-item .list-item-stats .percentage-heading[data-positive="1"] {
+#map-view .map-header-list .header-list-item .list-item-stats .percentage-heading[data-positive="true"] {
 	color: rgb(25, 150, 100);
 }
 
-#map-view .map-header-list .header-list-item .list-item-stats .percentage-heading[data-positive="0"] {
+#map-view .map-header-list .header-list-item .list-item-stats .percentage-heading[data-positive="false"] {
 	color: #eb4d4b;
 }
 
@@ -257,11 +257,11 @@
 	margin-right: 1.5rem;
 }
 
-#map-view .map-clickable .building .percentage-heading[data-positive="1"] {
+#map-view .map-clickable .building .percentage-heading[data-positive="true"] {
 	color: #e66767;
 }
 
-#map-view .map-clickable .building .percentage-heading[data-positive="0"] {
+#map-view .map-clickable .building .percentage-heading[data-positive="false"] {
 	color: #33d9b2;
 }
 
