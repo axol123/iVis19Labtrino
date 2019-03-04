@@ -47,8 +47,9 @@ export default class BubbleChart extends Component {
     this.sort_cold_scale = false;
     this.should_highlight = true;
 
-    this.$chartContainer = null;
     this.$labelContainer = null;
+    this.$chartContainer = null;
+    
   }
 
   componentDidMount() {
@@ -57,9 +58,9 @@ export default class BubbleChart extends Component {
 
   componentDidUpdate = (newProps) => {
     if(this.prevProps !== newProps) {
-      d3.select(this.$chartContainer).selectAll("*").remove();
       d3.select(this.$labelContainer).selectAll("*").remove();
-
+      d3.select(this.$chartContainer).selectAll("*").remove();
+     
       this.should_highlight=true;
       this.drawChart();
     }
@@ -542,7 +543,7 @@ export default class BubbleChart extends Component {
 
     //this.setState({wait_buildings: false, wait_apartments: false, wait_combine: false, wait_volume: false, wait_hot: false, wait_cold: true});
 
-    var labelsvg = d3.select(this.$chartContainer).select("#labels")
+    var labelsvg = d3.select(this.$labelContainer).select("#labels")
 
     labelsvg
       .selectAll("text")
@@ -577,30 +578,36 @@ export default class BubbleChart extends Component {
   }
 
   combine = e => {
-    var _this = this;
-
-    this.wait_apartments=true;
-    this.wait_combine = false;
-    this.wait_volume=false;
-    this.wait_hot=false;
-    this.wait_cold=false;
-
     d3.select(this.$labelContainer).selectAll("*").remove();
+    d3.select(this.$chartContainer).selectAll("*").remove();
+    //  if(newProps !== prevProps){
+    this.should_highlight=false;
+    this.drawChart();
 
-    this.sim
-      .force("x", this.forceX_combine)
-      .force("y", this.forceY)
-      .force("collide", this.force_collide)
-      .restart()
+    // var _this = this;
 
-      setTimeout(function() {
-        //var {wait_apartments} = _this.state;
-        if(_this.wait_apartments){
-          _this.sim
-            .alphaTarget(0)
-            .restart()
-          }
-       }, 3000);
+    // this.wait_apartments=true;
+    // this.wait_combine = false;
+    // this.wait_volume=false;
+    // this.wait_hot=false;
+    // this.wait_cold=false;
+
+    // d3.select(this.$labelContainer).selectAll("*").remove();
+
+    // this.sim
+    //   .force("x", this.forceX_combine)
+    //   .force("y", this.forceY)
+    //   .force("collide", this.force_collide)
+    //   .restart()
+
+    //   setTimeout(function() {
+    //     //var {wait_apartments} = _this.state;
+    //     if(_this.wait_apartments){
+    //       _this.sim
+    //         .alphaTarget(0)
+    //         .restart()
+    //       }
+    //    }, 3000);
        //this.wait_apartments = false;
   }
 
