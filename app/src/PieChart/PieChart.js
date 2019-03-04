@@ -126,8 +126,14 @@ export default class PieChart extends Component {
         .data(pie)
         .enter().append("g")
         .attr("class", "arc")
-        .on("mouseover",function(d,i){tooltip.text('Cold water: ' + Math.floor(data[i]) + '\n' + 'liters').style("font-size","15px").style("background-color",color(i)).style("padding", "10pt").style("border-radius","5px").style("color","#fff").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");})
-        .on("mousemove", function(){return tooltip.style("top", `${ parseInt(d3.select(this).attr("cy")) }px`).style("left",`${ parseInt(d3.select(this).attr("cx")+65) }px`)})
+        .on("mouseover",function(d,i){if(i == 0){
+          tooltip.text('Hot water: ' + Math.floor(data[i]) + '\n' + 'liters').style("font-size","15px").style("background-color",color(i)).style("padding", "10pt").style("border-radius","5px").style("color","#fff").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");
+              
+        }else{
+          tooltip.text('Cold water: ' + Math.floor(data[i]) + '\n' + 'liters').style("font-size","15px").style("background-color",color(i)).style("padding", "10pt").style("border-radius","5px").style("color","#fff").style( "box-shadow", "1px 1px 20px #a7a4a4"); return tooltip.style("visibility", "visible");}
+        }  )
+  
+        .on("mousemove", function(){return tooltip.style("top", `${ parseInt(d3.select(this).attr("cy")) }px`).style("left",`${ parseInt(d3.select(this).attr("cx")+70) }px`)})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
         arcs.append("path")
