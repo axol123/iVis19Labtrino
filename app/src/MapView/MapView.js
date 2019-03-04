@@ -1,6 +1,7 @@
 /* global window */
 import React, { Component } from 'react';
 import MapGL, { Marker, FlyToInterpolator } from 'react-map-gl';
+import './MapView.css';
 
 import * as d3 from 'd3';
 
