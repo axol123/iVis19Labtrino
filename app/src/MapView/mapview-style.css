@@ -299,7 +299,7 @@
   height: 18rem;
 }
 
-#map-view .map-detailed .detailed-list-item {
+#map-view .map-detailed .building-list-item {
 	padding: 1em 1.5em;
 	background: #1E2846;
 	border-bottom: 1px solid rgb(25, 30, 50);
@@ -307,7 +307,91 @@
 	cursor: pointer;
 }
 
-#map-view .map-detailed .detailed-list-item h4 {
+#map-view .map-detailed .building-list-item h4 {
 	margin-top: 0.5rem;
 	opacity: 0.48
+}
+
+#map-view .map-detailed .legend-list-container {
+	display: flex;
+}
+
+#map-view .map-detailed .legend-list {
+	display: flex;
+}
+
+#map-view .map-detailed .legend-list h4 {
+	color: #FFFFFF;
+	opacity: 0.64;
+}
+
+#map-view .map-detailed .legend-list-item {
+	display: flex;
+	margin-left: 1rem;
+	align-items: center;
+}
+
+#map-view .map-detailed .legend-list-item figure {
+	margin: 0 0.5rem 0 0;
+	width: 0.75rem;
+	height:0.75rem;
+	border-radius: 2px;
+}
+
+#map-view .map-detailed .apartment-list {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 1rem 1.5rem;
+    background: #1E2846;
+}
+
+
+#map-view .map-detailed .apartment-list-item {
+	margin-top: 0.5rem;
+	margin-right: 0.75rem;
+	margin-bottom: 0.5rem;
+	
+	flex-shrink: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	width: 2rem;
+	height: 2rem;
+	border-radius: 4px;
+
+	cursor: pointer;
+}
+
+#map-view .map-detailed .apartment-list-item h3 {
+	color: #2E3859;
+}
+
+
+#map-view .map-detailed .apartment-list-item:nth-child(5n) {
+	margin-right: 0;
+}
+
+#map-view .map-detailed .legend-list-item[data-room-size="1"] figure,
+#map-view .map-detailed .apartment-list-item[data-room-size="1"] {
+	background-image: linear-gradient(-135deg, #F6D599 0%, #F7B63D 100%);
+	box-shadow: 0 3px 12px 0 rgba(253,203,110,0.13);
+}
+
+#map-view .map-detailed .legend-list-item[data-room-size="2"] figure,
+#map-view .map-detailed .apartment-list-item[data-room-size="2"] {
+	background-image: linear-gradient(-135deg, #F9C5F7 0%, #E17BDD 100%);
+	box-shadow: 0 3px 12px 0 rgba(252,175,249,0.11);
+}
+
+#map-view .map-detailed .legend-list-item[data-room-size="3"] figure,
+#map-view .map-detailed .apartment-list-item[data-room-size="3"] {
+	background-image: linear-gradient(-135deg, #FFA484 0%, #F56937 100%);
+	box-shadow: 0 3px 12px 0 rgba(245,105,55,0.24);
+}
+
+#map-view .map-detailed .legend-list-item[data-room-size="4"] figure,
+#map-view .map-detailed .apartment-list-item[data-room-size="4"] {
+	background-image: linear-gradient(-135deg, #ACF4D2 0%, #40C485 100%);
+	box-shadow: 0 3px 12px 0 rgba(105,210,160,0.16);
 }

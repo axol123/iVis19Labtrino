@@ -208,7 +208,7 @@ export default class App extends Component {
     )
   }
 
-  _renderHeaderListItem = (building, i) => {
+  _renderHeaderBuildingItem = (building, i) => {
     const { id, address, volume } = building;
 
     return (
@@ -222,12 +222,26 @@ export default class App extends Component {
     )
   }
 
+  _renderHeaderApartmentItem = (building, i) => {
+    const { id, number, volume } = building;
+
+    return (
+      <li key={ id } className="header-list-item">
+        <h3>Apartment { number}</h3>
+
+        <div className="list-item-stats">
+          <h4 className="consumption-heading">{ volume.toLocaleString() } <span className="unit">Litres</span></h4>
+        </div>
+      </li>
+    )
+  }
+
   _renderBuilding = (building, apartments) => {
     const { id, address, volume } = building;
     const [ long, lat ] = BUILDING_COORDINATES[id].coordinates;
 
     return (
-      <li key={ id } className="detailed-list-item" onClick= { () => this._goToBuilding(building, long, lat) } onMouseEnter= { () => this.setMarkerActive(id, "true") } onMouseLeave= { () => this.setMarkerActive(id, null) }>
+      <li key={ id } className="detailed-list-item building-list-item" onClick= { () => this._goToBuilding(building, long, lat) } onMouseEnter= { () => this.setMarkerActive(id, "true") } onMouseLeave= { () => this.setMarkerActive(id, null) }>
         <h3>{ address }</h3>
         <h4>{ apartments.length } apartments</h4>
       </li>
@@ -239,9 +253,8 @@ export default class App extends Component {
     const { setSelectedApartment } = this.props;
 
     return (
-      <li key={ id } className="detailed-list-item" onClick= { () => setSelectedApartment(apartment.id) }>
-        <h3>Apartment { number }</h3>
-        <h4>{ size } Rooms</h4>
+      <li key={ id } className="detailed-list-item apartment-list-item" data-room-size={ size } onClick= { () => setSelectedApartment(apartment.id) }>
+        <h3>{ number }</h3>
       </li>
     )
   }
@@ -257,16 +270,65 @@ export default class App extends Component {
     }
 
 
-    let header = "Top consumers"
-    let buildingList = visibleBuildings.map((building, i) => this._renderBuilding(building.value, apartments[building.key], averageVolume, i));
+
+    /* Skräääääp */
+    let topheader = "Top consumers"
+    let topList = visibleBuildings.map((building, i) => this._renderHeaderBuildingItem(building.value, i));
+
+    let bottomHeader = `${ visibleBuildings.length } Buildings`
+    let bottomLegend = null;
+    const buildingList = visibleBuildings.map((building, i) => this._renderBuilding(building.value, apartments[building.key], averageVolume, i));
+    let bottomList = <ul className="map-detailed-list building-list">{ buildingList }</ul>
+
     if (selectedBuilding) {
-      header = selectedBuilding.address
-      buildingList = apartments[selectedBuilding.id].map((apartment, i) => this._renderApartment(apartment.value, i));
+      const apartmentBuildings = apartments[selectedBuilding.id];
+
+      topheader = selectedBuilding.address
+      topList = apartmentBuildings
+        .sort((a, b) => (b.value.volume - a.value.volume))
+        .slice(0, Math.min(apartmentBuildings.length, 3))
+        .map((apartment, i) => this._renderHeaderApartmentItem(apartment.value, i))
+
+      bottomHeader = `${ apartmentBuildings.length } Apartments`
+      bottomLegend = (
+        <div className="legend-list-container">
+          <h4>Rooms</h4>
+
+          <ul className="legend-list">
+            <li className="legend-list-item" data-room-size="1">
+              <figure></figure>
+
+              <h5>1</h5>
+            </li>
+
+            <li className="legend-list-item" data-room-size="2">
+              <figure></figure>
+
+              <h5>2</h5>
+            </li>
+
+            <li className="legend-list-item" data-room-size="3">
+              <figure></figure>
+
+              <h5>3</h5>
+            </li>
+
+            <li className="legend-list-item" data-room-size="4">
+              <figure></figure>
+
+              <h5>4</h5>
+            </li>
+          </ul>
+        </div>
+      )
+      const apartmentList = apartmentBuildings
+        .sort((a, b) => (a.value.number - b.value.number))
+        .map((apartment, i) => this._renderApartment(apartment.value, i));
+      bottomList = <ul className="map-detailed-list apartment-list">{ apartmentList }</ul>
     }
 
 
     const makers = visibleBuildings.map((building, i) => this._renderMarker(zoom, selectedBuilding, building.value, averageVolume, i));
-    const topList = visibleBuildings.map((building, i) => this._renderHeaderListItem(building.value, i));
 
 
     return (
@@ -289,7 +351,7 @@ export default class App extends Component {
             <div className="map-header-info">
               <button className="back-button" onClick={ this._onBackClick }>{ back_button }</button>
 
-              <h2>{ header }</h2>
+              <h2>{ topheader }</h2>
               <h4>This Month</h4>
             </div>
 
@@ -313,11 +375,12 @@ export default class App extends Component {
 
           <div className="column bottom map-detailed">
             <div className="map-detailed-info">
-              <h2>{ visibleBuildings.length } Buildings</h2>
-              <h4>out of { buildings.length } available</h4>
+              <h2>{ bottomHeader }</h2>
+
+              { bottomLegend }
             </div>
 
-            <ul className="map-detailed-list">{ buildingList }</ul>
+            { bottomList }
           </div>
         </div>
       </div>
