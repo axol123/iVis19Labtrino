@@ -362,7 +362,7 @@
 	border-radius: 4px;
 
 	cursor: pointer;
-	transform: opacity 120ms ease;
+	transition: opacity 120ms ease;
 }
 
 #map-view .map-detailed .apartment-list-item[data-selected="false"] {
@@ -375,6 +375,7 @@
 
 #map-view .map-detailed .apartment-list-item h3 {
 	color: #2E3859;
+	font-size: 0.75rem;
 }
 
 
