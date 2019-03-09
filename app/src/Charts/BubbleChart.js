@@ -46,6 +46,7 @@ export default class BubbleChart extends Component {
     this.sort_hot_scale = false;
     this.sort_cold_scale = false;
     this.should_highlight = true;
+    this.should_divide = false;
 
     this.$labelContainer = null;
     this.$chartContainer = null;
@@ -118,6 +119,25 @@ export default class BubbleChart extends Component {
         console.log("nested data är")
         console.log(nestedData )
 
+        if(this.should_divide){
+          nestedData.forEach(function(d, i){
+            var d_new = d;
+            var rooms = d.value.apartment_size;
+            console.log("DIVIDE STUFF")
+            console.log(i)
+            console.log(d)
+            d.value.volume /= rooms;
+            d.value.hot /= rooms;
+            d.value.cold /= rooms;
+            console.log(d)
+            //d_new.value.volume = d.value.volume/rooms;
+
+            // d_new.value.hot = d.value.hot/rooms;
+            // d_new.value.cold = d.value.cold/rooms;
+            // this[i] = d_new;
+          });
+        }
+
         //Find apartment with highest and lowest water consumption
         this.max = 0;
         this.min = 20000;
@@ -125,6 +145,7 @@ export default class BubbleChart extends Component {
         this.min_hot = 20000;
         this.max_cold = 0;
         this.min_cold = 20000;
+
 
         // this.max_apartment;
         // this.min_apartment;
@@ -586,6 +607,7 @@ export default class BubbleChart extends Component {
     d3.select(this.$chartContainer).selectAll("*").remove();
     //  if(newProps !== prevProps){
     this.should_highlight=false;
+    this.should_divide = false;
     this.drawChart();
 
     // var _this = this;
@@ -616,6 +638,13 @@ export default class BubbleChart extends Component {
   }
 
 
+  divide_rooms = e => {
+    d3.select(this.$labelContainer).selectAll("*").remove();
+    d3.select(this.$chartContainer).selectAll("*").remove();
+    //  if(newProps !== prevProps){
+    this.should_divide = true;
+    this.drawChart();
+  }
 
 
 
@@ -625,7 +654,7 @@ export default class BubbleChart extends Component {
         <header>
           <h2>Consumption Distribution</h2>
 
-          <BubbleButtons combine={this.combine} filterRooms={this.filter_rooms} sortVolume={this.sort_volume} sortVolumeHot={this.sort_volume_hot} sortVolumeCold={this.sort_volume_cold} />
+          <BubbleButtons combine={this.combine} filterRooms={this.filter_rooms} sortVolume={this.sort_volume} sortVolumeHot={this.sort_volume_hot} sortVolumeCold={this.sort_volume_cold} divideRooms = {this.divide_rooms} />
         </header>
 
         <div className="label-container" ref={ element => this.$labelContainer = element }>
