@@ -49,9 +49,14 @@ export default class About extends Component {
 									Stockholm, Sweden. The project is a collaboration with startup company <a href="http://www.labtrino.com/">Labtrino AB</a>, 
                                     a company which develops intelligent water meter systems for residental property owners. 
                                     This web application is supposed to help property managers in their daily work by providing them a set of visualizations to gain insights about water consumption.
-                                    <img src={Labtrino} alt="Labtrino Logo" className="img-fluid col-lg-4 col-6 p-4 mt-2 mx-auto d-block" />
+									Working on this project have helped us to better understand and make use of D3:s various functionalities for information visualization, e.g. data calculations and visual mapping to visual structures. 
+									Additionally how to implement it in a React app. Moreover, it has been interesting to work with a company and put theory into practice in a real case scenario.   
+                                    <img src={Labtrino} alt="Labtrino Logo" className="img-fluid col-lg-4 col-6 pt-3 mt-2 mx-auto d-block" />
 								</p>
-								<h3 className="pb-4 mt-4" id="team-title">Meet our Team</h3>
+								<h3 className="pb-4 mt-5" id="content-title">Demo</h3>
+								<div className='embed-container'><iframe src='https://www.youtube.com/embed//zuv5xfDzQe4?rel=0' frameborder='0' allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>
+
+								<h3 className="pb-4 mt-5" id="content-title">Meet our Team</h3>
 								<p className="text-left mb-2">
 									We are 6 students from a variety of
 									master programs, within the fields of Visualization,
